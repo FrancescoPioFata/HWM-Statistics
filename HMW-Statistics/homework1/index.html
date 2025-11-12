@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 1</title>
+ <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #f1f1f1;
+        background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                    url('https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=3000') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .subsection {
+  margin-left: 30px;
+  padding-left: 10px;
+  background-color: transparent; 
+  border-left: none;               
+    }
+
+  h2 ,strong {
+  color: #334f9f; 
+  }
+
+main h2, section h2 {
+  text-align: left;
+  color: #1e3a8a; 
+  font-size: 1.8rem;
+  margin-top: 30px;
+}
+
+    header {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        color: white;
+        padding: 2rem 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    h1 {
+        font-size: 2.7rem;
+        margin-bottom: 0.5rem;
+    }
+
+    main {
+        padding: 3rem 0;
+    }
+
+    section {
+        background: rgba(25, 25, 35, 0.9);
+        margin-bottom: 2rem;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+        color: #3b82f6;
+        margin-bottom: 1rem;
+        font-size: 2.0rem;
+        border-bottom: 2px solid #1e3a8a;
+        padding-bottom: 0.5rem;
+    }
+
+    p {
+    margin-bottom: 1.2rem;
+    }
+
+    footer {
+        background: #0f172a;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 3rem;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+    }
+
+    .content-box {
+    max-width: 1200px;       
+    margin: 0 auto;         
+    padding: 2rem;          
+    background: rgba(20, 20, 30, 0.85);  
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+.back-home-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+ }
+
+.back-home-link {
+    background-color: #3b82f6; 
+    color: #ffffff; 
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+ }
+
+.back-home-link:hover {
+    background-color: #1e3a8a;
+    transform: scale(1.05);
+ }
+</style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📈 Homework 1 </h1>
+        </div>
+    </header>
+     <main>
+    <article class="content-box">
+
+  <h2>What Is Statistics, and Why Can It Be Useful for Cybersecurity?</h2>
+  <p>
+    <strong>Statistics:</strong><br>
+    Statistics represents the mathematical discipline focused on the acquisition, organization, and interpretation of numerical information. In the era of hyper-connectivity, every digital transaction, user interaction, or network event contributes to an ever-growing pool of data. These immense datasets, both structured and unstructured, can only be meaningfully understood through statistical methods that transform raw data into coherent insights. Within the cybersecurity domain, these methods enable analysts to detect irregularities hidden in normal behavior, assess potential risks, and build predictive systems capable of anticipating threats before they manifest.
+  </p>
+  <p>
+    Broadly speaking, statistical techniques can be grouped into <em>descriptive</em> and <em>inferential</em> approaches. Descriptive statistics deal with summarizing and visualizing data—calculating averages, dispersions, and producing charts that expose recurring patterns. In cybersecurity, such analyses allow for the creation of behavioral baselines that distinguish legitimate operations from anomalies. Inferential statistics, on the other hand, rely on probability to extend observations beyond the examined sample—testing hypotheses, estimating event probabilities, and validating security strategies based on quantitative evidence.
+  </p>
+  <p>
+    <strong>Cybersecurity:</strong><br>
+    Cybersecurity concerns the defense of digital infrastructures and data from breaches, attacks, and unauthorized manipulation. Modern cyber threats—ransomware, phishing, insider misuse, or AI-driven exploits—generate enormous streams of activity logs and network traces. Through statistical reasoning, analysts can model what constitutes normal traffic, quantify deviations, and predict where and when new attacks might occur. This evidence-based approach replaces intuition with verifiable, data-supported conclusions.
+  </p>
+  <p>
+    A particularly vital implementation is <em>anomaly detection</em>, where statistical thresholds and models such as clustering, regression, or Bayesian inference identify deviations from expected patterns. By applying these techniques, intrusion detection systems can automatically flag activities that diverge from statistical norms, revealing potentially malicious actions. Similarly, <em>risk assessment</em> leverages probability distributions and uncertainty modeling to evaluate the potential impact of adverse events, continuously updating the threat landscape as new data emerges.
+  </p>
+  <p>
+    Another essential aspect is the <em>evaluation of security measures</em>. Using statistical testing and regression analysis, experts can determine whether new defense mechanisms—like an intrusion prevention rule or authentication policy—significantly enhance system resilience. Without these validations, cybersecurity decisions risk being grounded on assumptions rather than empirical proof. Moreover, machine learning, which forms the backbone of many security systems, stems directly from statistical learning theory. Methods such as logistic regression, neural networks, and clustering algorithms empower adaptive models capable of detecting spam, malware, or fraudulent activity in real time.
+  </p>
+  <p>
+    <strong>Conclusion:</strong><br>
+    Ultimately, statistics is not merely a support discipline for cybersecurity—it is one of its scientific pillars. By enabling quantitative reasoning, anomaly detection, and predictive analysis, it transforms raw security data into actionable intelligence. Integrating statistical principles allows cybersecurity to evolve from reactive defense to proactive anticipation, ensuring that decisions are both measurable and evidence-driven.
+  </p>
+
+<section class="mt-5">
+  <strong>References</strong>
+  <ul>
+    <li>
+      Buczak, A. L., &amp; Guven, E. (2016). “<a href="https://ieeexplore.ieee.org/document/7407379" target="_blank" rel="noopener noreferrer">A Survey of Data Mining and Machine Learning Methods for Cyber Security Intrusion Detection</a>.” <em>IEEE Communications Surveys &amp; Tutorials</em>, 18(2), 1153–1176.
+    </li>
+    <li>
+      McAfee, C., &amp; Bryson, K. (2019). “<a href="https://academic.oup.com/cybersecurity/article/5/1/tyz003/5572018" target="_blank" rel="noopener noreferrer">The Role of Statistics in Cybersecurity</a>.” <em>Journal of Cybersecurity</em>, 5(1).
+    </li>
+    <li>
+      National Institute of Standards and Technology (NIST). (2012). <em><a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf" target="_blank" rel="noopener noreferrer">Guide to Intrusion Detection and Prevention Systems (IDPS)</a></em>. NIST Special Publication 800-94.
+    </li>
+    <li>
+      Diez, D. M., Barr, C. D., &amp; Çetinkaya-Rundel, M. (2021). <em><a href="https://www.openintro.org/book/os/" target="_blank" rel="noopener noreferrer">OpenIntro Statistics (4th ed.)</a></em>. OpenIntro Press.
+    </li>
+    <li>
+      National Institute of Standards and Technology (NIST). (2016). <em><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-160v1.pdf" target="_blank" rel="noopener noreferrer">Systems Security Engineering: Considerations for a Multidisciplinary Approach in the Engineering of Trustworthy Secure Systems</a></em>. NIST Special Publication 800-160, Volume 1.
+    </li>
+    <li>
+      Sommer, R., &amp; Paxson, V. (2010). “<a href="https://www.usenix.org/legacy/event/hotbots10/tech/full_papers/Sommer.pdf" target="_blank" rel="noopener noreferrer">Outside the Closed World: On Using Machine Learning for Network Intrusion Detection</a>.” <em>IEEE Symposium on Security and Privacy</em>.
+    </li>
+  </ul>
+</section>
+
+</article>
+
+<div class="back-home-box">
+  <a href="../index.html" class="back-home-link">← Back to Home</a>
+</div>
+  </main>
+
+  <footer class="mt-5 text-center">
+    <hr>
+    <p><small>&copy; 2025 Francesco Pio Fata – Homework 1</small></p>
+  </footer>
+
+</body>
+</html>

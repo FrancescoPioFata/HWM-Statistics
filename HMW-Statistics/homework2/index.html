@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 2 - Distribution & Caesar Cipher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                        url('https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=3000') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .subsection {
+            margin-left: 30px;
+            padding-left: 10px;
+            background-color: transparent; 
+            border-left: none;               
+        }
+
+        h2, strong {
+            color: #334f9f; 
+        }
+
+        main h2, section h2 {
+            text-align: left;
+            color: #1e3a8a; 
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        .content-box {
+            max-width: 1200px;       
+            margin: 0 auto;         
+            padding: 2rem;          
+            background: rgba(20, 20, 30, 0.85);  
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6; 
+            color: #ffffff; 
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .sql-code {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #3b82f6;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 1rem 0;
+            color: #a5d6ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(15, 15, 25, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: monospace;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        .chart-container {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .bar {
+            background: linear-gradient(90deg, #3b82f6, #1e3a8a);
+            height: 30px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .bar:hover {
+            transform: scaleX(1.02);
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.2);
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        code {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cipher-output {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            border: 2px solid #3b82f6;
+            min-height: 100px;
+            margin-top: 1rem;
+            font-family: monospace;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Homework 2 - Distribution & Caesar Cipher</h1>
+            <p class="subtitle">Dataset, Distributions & Frequency Analysis</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>The Concept of Distribution and Dataset</h2>
+            
+            <p>
+                <strong>Dataset:</strong><br>
+                A dataset is a structured collection of data, typically organized in tables with rows representing individual observations (records) and columns representing variables (attributes). Each row contains data about one entity, while each column contains values for a specific characteristic across all entities.
+            </p>
+
+            <p>
+                In a Database Management System (DBMS) such as MySQL, PostgreSQL, or SQLite, datasets are stored as tables that can be efficiently queried, filtered, joined, and analyzed using SQL (Structured Query Language). This structured approach enables systematic data management and statistical analysis.
+            </p>
+
+            <p>
+                <strong>Distribution:</strong><br>
+                A distribution describes how values of a variable are spread across a dataset. It reveals patterns such as central tendencies (mean, median), variability (standard deviation, range), and the shape of data (skewed, normal, bimodal). Understanding distributions is fundamental for statistical inference and decision-making.
+            </p>
+
+            <h3>Types of Distributions</h3>
+            <ul>
+                <li><strong>Univariate Distribution:</strong> Examines a single variable in isolation, showing frequency counts or percentages for each value or range of values.</li>
+                <li><strong>Bivariate Distribution:</strong> Analyzes two variables simultaneously to explore relationships, correlations, or dependencies between them.</li>
+                <li><strong>Multivariate Distribution:</strong> Extends analysis to three or more variables, revealing complex interactions within the data.</li>
+            </ul>
+
+            <h2>Interactive Dataset and SQL Queries</h2>
+            
+            <div class="info-box">
+                <strong>📚 Dataset Description:</strong> This example uses a dataset tracking employee performance metrics including department, years of experience, training hours, and performance scores. The database is created using SQL commands compatible with MySQL/MariaDB.
+            </div>
+
+            <h3>SQL Script — Create and Populate Dataset</h3>
+            <div class="sql-code">-- Create the database
+CREATE DATABASE IF NOT EXISTS company_db;
+USE company_db;
+
+-- Create the employees table
+CREATE TABLE employees (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    department VARCHAR(30) NOT NULL,
+    years_experience INT NOT NULL,
+    training_hours INT NOT NULL,
+    performance_score INT NOT NULL
+);
+
+-- Insert sample data
+INSERT INTO employees (name, department, years_experience, training_hours, performance_score) VALUES
+('Alice Johnson', 'Engineering', 5, 40, 92),
+('Bob Smith', 'Marketing', 3, 25, 78),
+('Carol White', 'Sales', 7, 30, 88),
+('David Brown', 'Engineering', 2, 35, 85),
+('Emma Davis', 'HR', 4, 20, 75),
+('Frank Wilson', 'Marketing', 6, 45, 91),
+('Grace Lee', 'Engineering', 3, 38, 87),
+('Henry Taylor', 'Sales', 5, 28, 82),
+('Ivy Martinez', 'HR', 8, 50, 95),
+('Jack Anderson', 'Engineering', 4, 42, 89),
+('Kate Thomas', 'Marketing', 2, 22, 73),
+('Leo Jackson', 'Sales', 6, 33, 86),
+('Maya Garcia', 'Engineering', 7, 48, 94),
+('Noah Rodriguez', 'HR', 3, 18, 71),
+('Olivia Miller', 'Marketing', 5, 40, 90),
+('Paul Martinez', 'Sales', 4, 26, 80),
+('Quinn Harris', 'Engineering', 9, 55, 97),
+('Ruby Clark', 'HR', 6, 35, 84),
+('Sam Lewis', 'Marketing', 4, 30, 81),
+('Tina Walker', 'Sales', 8, 44, 93);</div>
+
+            <h3>Complete Dataset</h3>
+            <div style="overflow-x: auto;">
+                <table id="mainTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Years Experience</th>
+                            <th>Training Hours</th>
+                            <th>Performance Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mainTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Univariate Distribution Analysis</h2>
+
+            <h3>Query 1: Department Distribution</h3>
+            <p>This query calculates the frequency and percentage of employees in each department.</p>
+            <div class="sql-code">SELECT 
+    department, 
+    COUNT(*) AS frequency,
+    ROUND((COUNT(*) * 100.0) / (SELECT COUNT(*) FROM employees), 2) AS percentage
+FROM employees
+GROUP BY department
+ORDER BY frequency DESC;</div>
+
+            <div class="demo-section">
+                <button onclick="runDepartmentQuery()">▶ Run Query</button>
+                <div id="deptResult" style="display:none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Frequency</th>
+                                <th>Percentage (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deptTableBody"></tbody>
+                    </table>
+                    <div class="chart-container" id="deptChart"></div>
+                </div>
+            </div>
+
+            <h3>Query 2: Performance Score Distribution</h3>
+            <p>This query groups performance scores into ranges and shows their distribution.</p>
+            <div class="sql-code">SELECT 
+    CASE 
+        WHEN performance_score BETWEEN 70 AND 79 THEN '70-79'
+        WHEN performance_score BETWEEN 80 AND 89 THEN '80-89'
+        WHEN performance_score BETWEEN 90 AND 100 THEN '90-100'
+        ELSE 'Other'
+    END AS score_range,
+    COUNT(*) AS frequency,
+    ROUND((COUNT(*) * 100.0) / (SELECT COUNT(*) FROM employees), 2) AS percentage
+FROM employees
+GROUP BY score_range
+ORDER BY score_range;</div>
+
+            <div class="demo-section">
+                <button onclick="runScoreQuery()">▶ Run Query</button>
+                <div id="scoreResult" style="display:none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Score Range</th>
+                                <th>Frequency</th>
+                                <th>Percentage (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scoreTableBody"></tbody>
+                    </table>
+                    <div class="chart-container" id="scoreChart"></div>
+                </div>
+            </div>
+
+            <h2>Bivariate Distribution Analysis</h2>
+
+            <h3>Query 3: Training Hours vs Performance</h3>
+            <p>This query examines the relationship between training hours (binned) and performance score ranges.</p>
+            <div class="sql-code">SELECT 
+    CASE 
+        WHEN training_hours BETWEEN 0 AND 29 THEN '0-29'
+        WHEN training_hours BETWEEN 30 AND 44 THEN '30-44'
+        WHEN training_hours BETWEEN 45 AND 60 THEN '45-60'
+    END AS training_bin,
+    SUM(CASE WHEN performance_score BETWEEN 70 AND 79 THEN 1 ELSE 0 END) AS '70-79',
+    SUM(CASE WHEN performance_score BETWEEN 80 AND 89 THEN 1 ELSE 0 END) AS '80-89',
+    SUM(CASE WHEN performance_score BETWEEN 90 AND 100 THEN 1 ELSE 0 END) AS '90-100',
+    COUNT(*) AS total
+FROM employees
+GROUP BY training_bin
+ORDER BY training_bin;</div>
+
+            <div class="demo-section">
+                <button onclick="runBivariateQuery()">▶ Run Query</button>
+                <div id="bivariateResult" style="display:none;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Training Hours</th>
+                                <th>70-79</th>
+                                <th>80-89</th>
+                                <th>90-100</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bivariateTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h2>Caesar Cipher Challenge</h2>
+            
+            <div class="info-box">
+                <strong>🔐 About Caesar Cipher:</strong> The Caesar cipher is a simple substitution cipher where each letter is shifted by a fixed number of positions in the alphabet. Frequency analysis exploits the fact that certain letters appear more often in natural language (e.g., E, T, A in English) to crack the cipher without knowing the shift value.
+            </div>
+
+            <div class="demo-section">
+                <h3>1. Analyze Text Frequency</h3>
+                <div class="form-group">
+                    <label for="plaintext">Enter text to analyze:</label>
+                    <textarea id="plaintext" placeholder="Enter your text here...">The quick brown fox jumps over the lazy dog</textarea>
+                </div>
+                <button onclick="analyzeFrequency()">📊 Analyze Frequency</button>
+                <div class="chart-container" id="freqChart" style="display:none;"></div>
+            </div>
+
+            <div class="demo-section">
+                <h3>2. Encrypt with Caesar Cipher</h3>
+                <div class="form-group">
+                    <label for="encryptText">Text to encrypt:</label>
+                    <textarea id="encryptText" placeholder="Enter text to encrypt..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="shiftValue">Shift value (1-25):</label>
+                    <input type="number" id="shiftValue" min="1" max="25" value="3">
+                </div>
+                <button onclick="encryptText()">🔒 Encrypt</button>
+                <div class="cipher-output" id="encryptedOutput" style="display:none;"></div>
+            </div>
+
+            <div class="demo-section">
+                <h3>3. Decrypt (Brute Force with Frequency Analysis)</h3>
+                <div class="form-group">
+                    <label for="decryptText">Encrypted text:</label>
+                    <textarea id="decryptText" placeholder="Paste encrypted text here..."></textarea>
+                </div>
+                <button onclick="bruteForceDecrypt()">🔓 Decrypt (Auto-detect shift)</button>
+                <div id="decryptResult" style="display:none;">
+                    <h4 style="color: #3b82f6; margin-top: 1rem;">Best Match (shift = <span id="bestShift"></span>):</h4>
+                    <div class="cipher-output" id="decryptedOutput"></div>
+                    <h4 style="color: #3b82f6; margin-top: 1rem;">All Possible Shifts:</h4>
+                    <div class="cipher-output" id="allShifts"></div>
+                </div>
+            </div>
+        </article>
+
+        <div class="back-home-box">
+            <a href="../index.html" class="back-home-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p><small>&copy; 2025 Francesco Pio Fata – Homework 2</small></p>
+    </footer>
+
+    <script>
+        // Dataset
+        const employees = [
+            {id: 1, name: 'Alice Johnson', department: 'Engineering', years_experience: 5, training_hours: 40, performance_score: 92},
+            {id: 2, name: 'Bob Smith', department: 'Marketing', years_experience: 3, training_hours: 25, performance_score: 78},
+            {id: 3, name: 'Carol White', department: 'Sales', years_experience: 7, training_hours: 30, performance_score: 88},
+            {id: 4, name: 'David Brown', department: 'Engineering', years_experience: 2, training_hours: 35, performance_score: 85},
+            {id: 5, name: 'Emma Davis', department: 'HR', years_experience: 4, training_hours: 20, performance_score: 75},
+            {id: 6, name: 'Frank Wilson', department: 'Marketing', years_experience: 6, training_hours: 45, performance_score: 91},
+            {id: 7, name: 'Grace Lee', department: 'Engineering', years_experience: 3, training_hours: 38, performance_score: 87},
+            {id: 8, name: 'Henry Taylor', department: 'Sales', years_experience: 5, training_hours: 28, performance_score: 82},
+            {id: 9, name: 'Ivy Martinez', department: 'HR', years_experience: 8, training_hours: 50, performance_score: 95},
+            {id: 10, name: 'Jack Anderson', department: 'Engineering', years_experience: 4, training_hours: 42, performance_score: 89},
+            {id: 11, name: 'Kate Thomas', department: 'Marketing', years_experience: 2, training_hours: 22, performance_score: 73},
+            {id: 12, name: 'Leo Jackson', department: 'Sales', years_experience: 6, training_hours: 33, performance_score: 86},
+            {id: 13, name: 'Maya Garcia', department: 'Engineering', years_experience: 7, training_hours: 48, performance_score: 94},
+            {id: 14, name: 'Noah Rodriguez', department: 'HR', years_experience: 3, training_hours: 18, performance_score: 71},
+            {id: 15, name: 'Olivia Miller', department: 'Marketing', years_experience: 5, training_hours: 40, performance_score: 90},
+            {id: 16, name: 'Paul Martinez', department: 'Sales', years_experience: 4, training_hours: 26, performance_score: 80},
+            {id: 17, name: 'Quinn Harris', department: 'Engineering', years_experience: 9, training_hours: 55, performance_score: 97},
+            {id: 18, name: 'Ruby Clark', department: 'HR', years_experience: 6, training_hours: 35, performance_score: 84},
+            {id: 19, name: 'Sam Lewis', department: 'Marketing', years_experience: 4, training_hours: 30, performance_score: 81},
+            {id: 20, name: 'Tina Walker', department: 'Sales', years_experience: 8, training_hours: 44, performance_score: 93}
+        ];
+
+        // Populate main table
+        const tbody = document.getElementById('mainTableBody');
+        employees.forEach(emp => {
+            tbody.innerHTML += `<tr>
+                <td>${emp.id}</td>
+                <td>${emp.name}</td>
+                <td>${emp.department}</td>
+                <td>${emp.years_experience}</td>
+                <td>${emp.training_hours}</td>
+                <td>${emp.performance_score}</td>
+            </tr>`;
+        });
+
+        // Query 1: Department Distribution
+        function runDepartmentQuery() {
+            const deptCount = {};
+            employees.forEach(emp => {
+                deptCount[emp.department] = (deptCount[emp.department] || 0) + 1;
+            });
+
+            const total = employees.length;
+            const results = Object.entries(deptCount)
+                .map(([dept, count]) => ({dept, count, pct: ((count/total)*100).toFixed(2)}))
+                .sort((a, b) => b.count - a.count);
+
+            const tbody = document.getElementById('deptTableBody');
+            tbody.innerHTML = results.map(r => 
+                `<tr><td>${r.dept}</td><td>${r.count}</td><td>${r.pct}%</td></tr>`
+            ).join('');
+
+            const chart = document.getElementById('deptChart');
+            const maxCount = Math.max(...results.map(r => r.count));
+            chart.innerHTML = results.map(r => 
+                `<div class="bar" style="width: ${(r.count/maxCount)*100}%">${r.dept}: ${r.count} (${r.pct}%)</div>`
+            ).join('');
+
+            document.getElementById('deptResult').style.display = 'block';
+        }
+
+        // Query 2: Performance Score Distribution
+        function runScoreQuery() {
+            const ranges = {'70-79': 0, '80-89': 0, '90-100': 0};
+            employees.forEach(emp => {
+                const score = emp.performance_score;
+                if (score >= 70 && score <= 79) ranges['70-79']++;
+                else if (score >= 80 && score <= 89) ranges['80-89']++;
+                else if (score >= 90 && score <= 100) ranges['90-100']++;
+            });
+
+            const total = employees.length;
+            const results = Object.entries(ranges).map(([range, count]) => ({
+                range, count, pct: ((count/total)*100).toFixed(2)
+            }));
+
+            const tbody = document.getElementById('scoreTableBody');
+            tbody.innerHTML = results.map(r => 
+                `<tr><td>${r.range}</td><td>${r.count}</td><td>${r.pct}%</td></tr>`
+            ).join('');
+
+            const chart = document.getElementById('scoreChart');
+            const maxCount = Math.max(...results.map(r => r.count));
+            chart.innerHTML = results.map(r => 
+                `<div class="bar" style="width: ${(r.count/maxCount)*100}%">${r.range}: ${r.count} (${r.pct}%)</div>`
+            ).join('');
+
+            document.getElementById('scoreResult').style.display = 'block';
+        }
+
+        // Query 3: Bivariate Analysis
+        function runBivariateQuery() {
+            const bins = {
+                '0-29': {'70-79': 0, '80-89': 0, '90-100': 0, total: 0},
+                '30-44': {'70-79': 0, '80-89': 0, '90-100': 0, total: 0},
+                '45-60': {'70-79': 0, '80-89': 0, '90-100': 0, total: 0}
+            };
+
+            employees.forEach(emp => {
+                let trainingBin = emp.training_hours <= 29 ? '0-29' : 
+                                 emp.training_hours <= 44 ? '30-44' : '45-60';
+                let scoreBin = emp.performance_score <= 79 ? '70-79' : 
+                              emp.performance_score <= 89 ? '80-89' : '90-100';
+                
+                bins[trainingBin][scoreBin]++;
+                bins[trainingBin].total++;
+            });
+
+            const tbody = document.getElementById('bivariateTableBody');
+            tbody.innerHTML = Object.entries(bins).map(([bin, data]) => 
+                `<tr>
+                    <td>${bin}</td>
+                    <td>${data['70-79']}</td>
+                    <td>${data['80-89']}</td>
+                    <td>${data['90-100']}</td>
+                    <td>${data.total}</td>
+                </tr>`
+            ).join('');
+
+            document.getElementById('bivariateResult').style.display = 'block';
+        }
+
+        // Caesar Cipher Functions
+        const englishFreq = {
+            'E': 12.70, 'T': 9.06, 'A': 8.17, 'O': 7.51, 'I': 6.97,
+            'N': 6.75, 'S': 6.33, 'H': 6.09, 'R': 5.99, 'D': 4.25,
+            'L': 4.03, 'C': 2.78, 'U': 2.76, 'M': 2.41, 'W': 2.36,
+            'F': 2.23, 'G': 2.02, 'Y': 1.97, 'P': 1.93, 'B': 1.29,
+            'V': 0.98, 'K': 0.77, 'J': 0.15, 'X': 0.15, 'Q': 0.10, 'Z': 0.07
+        };
+
+        function analyzeFrequency() {
+            const text = document.getElementById('plaintext').value.toUpperCase();
+            const freq = {};
+            let total = 0;
+
+            for (let char of text) {
+                if (char >= 'A' && char <= 'Z') {
+                    freq[char] = (freq[char] || 0) + 1;
+                    total++;
+                }
+            }
+
+            const chart = document.getElementById('freqChart');
+            const sorted = Object.entries(freq)
+                .sort((a, b) => b[1] - a[1])
+                .map(([char, count]) => ({
+                    char, 
+                    count, 
+                    pct: ((count/total)*100).toFixed(2)
+                }));
+
+            const maxCount = Math.max(...sorted.map(s => s.count));
+            chart.innerHTML = '<h4 style="color: #3b82f6;">Letter Frequency Distribution:</h4>' + 
+                sorted.map(s => 
+                    `<div class="bar" style="width: ${(s.count/maxCount)*100}%">
+                        ${s.char}: ${s.count} (${s.pct}%)
+                    </div>`
+                ).join('');
+            chart.style.display = 'block';
+        }
+
+        function caesarShift(text, shift) {
+            return text.toUpperCase().split('').map(char => {
+                if (char >= 'A' && char <= 'Z') {
+                    const code = char.charCodeAt(0) - 65;
+                    const newCode = (code + shift + 26) % 26;
+                    return String.fromCharCode(newCode + 65);
+                }
+                return char;
+            }).join('');
+        }
+
+        function encryptText() {
+            const text = document.getElementById('encryptText').value;
+            const shift = parseInt(document.getElementById('shiftValue').value);
+            
+            if (!text) {
+                alert('Please enter text to encrypt');
+                return;
+            }
+
+            const encrypted = caesarShift(text, shift);
+            const output = document.getElementById('encryptedOutput');
+            output.textContent = encrypted;
+            output.style.display = 'block';
+            
+            // Copy to decrypt field for convenience
+            document.getElementById('decryptText').value = encrypted;
+        }
+
+        function calculateFrequency(text) {
+            const freq = {};
+            let total = 0;
+
+            for (let char of text.toUpperCase()) {
+                if (char >= 'A' && char <= 'Z') {
+                    freq[char] = (freq[char] || 0) + 1;
+                    total++;
+                }
+            }
+
+            const percentages = {};
+            for (let char in freq) {
+                percentages[char] = (freq[char] / total) * 100;
+            }
+
+            return percentages;
+        }
+
+        function chiSquareScore(observedFreq) {
+            let score = 0;
+            for (let letter in englishFreq) {
+                const expected = englishFreq[letter];
+                const observed = observedFreq[letter] || 0;
+                score += Math.pow(observed - expected, 2) / expected;
+            }
+            return score;
+        }
+
+        function bruteForceDecrypt() {
+            const encrypted = document.getElementById('decryptText').value;
+            
+            if (!encrypted) {
+                alert('Please enter encrypted text');
+                return;
+            }
+
+            const results = [];
+            let bestShift = 0;
+            let bestScore = Infinity;
+
+            // Try all possible shifts
+            for (let shift = 1; shift <= 25; shift++) {
+                const decrypted = caesarShift(encrypted, -shift);
+                const freq = calculateFrequency(decrypted);
+                const score = chiSquareScore(freq);
+                
+                results.push({ shift, decrypted, score });
+                
+                if (score < bestScore) {
+                    bestScore = score;
+                    bestShift = shift;
+                }
+            }
+
+            // Display best result
+            document.getElementById('bestShift').textContent = bestShift;
+            document.getElementById('decryptedOutput').textContent = 
+                results.find(r => r.shift === bestShift).decrypted;
+
+            // Display all shifts
+            const allShiftsDiv = document.getElementById('allShifts');
+            allShiftsDiv.innerHTML = results
+                .sort((a, b) => a.score - b.score)
+                .map(r => 
+                    `<div style="margin: 10px 0; padding: 10px; background: rgba(59, 130, 246, ${r.shift === bestShift ? 0.3 : 0.1}); border-radius: 4px;">
+                        <strong>Shift ${r.shift}</strong> (χ² score: ${r.score.toFixed(2)})<br>
+                        ${r.decrypted.substring(0, 100)}${r.decrypted.length > 100 ? '...' : ''}
+                    </div>`
+                ).join('');
+
+            document.getElementById('decryptResult').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
