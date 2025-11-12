@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 6 - Analytical task </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        h4 {
+            color: #60a5fa;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        .content-box {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.85);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        .proof-box {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .math-formula {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            color: #a5d6ff;
+            overflow-x: auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.2);
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.2);
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        button.danger {
+            background-color: #dc2626;
+        }
+
+        button.danger:hover {
+            background-color: #991b1b;
+        }
+
+        button:disabled {
+            background-color: #4b5563;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(15, 15, 25, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-card {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #3b82f6;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            color: #f1f1f1;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        code {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .comparison-table {
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th {
+            text-align: center;
+        }
+
+        .comparison-table td {
+            text-align: center;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #3b82f6;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 1rem 0;
+            color: #a5d6ff;
+            font-size: 0.9rem;
+        }
+
+        .example-calculation {
+            background: rgba(34, 197, 94, 0.1);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            border: 1px solid #22c55e;
+        }
+
+        .step-list {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 0.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            background: #3b82f6;
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Homework 6 - Analytical task </h1>
+            <p class="subtitle">Incremental Mean & Variance: Theory, Implementation, and Numerical Analysis</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>🎯 Analytical Task</h2>
+            
+            <p>
+                This homework focuses on deriving the recurrence relationships for the arithmetic mean and variance, 
+                implementing online algorithms that update statistics incrementally, and analyzing their numerical 
+                advantages over traditional batch methods.
+            </p>
+
+            <h2>📐 Mathematical Derivations</h2>
+
+            <h3>1️⃣ Online Mean (Arithmetic Average)</h3>
+
+            <div class="proof-box">
+                <h4>Recurrence Relation Proof</h4>
+                
+                <p>The arithmetic mean of n observations is defined as:</p>
+                <div class="math-formula">
+                    μₙ = (1/n) Σᵢ₌₁ⁿ xᵢ
+                </div>
+
+                <p><strong>Derivation:</strong></p>
+                
+                <p>We can separate the last observation from the sum:</p>
+                <div class="math-formula">
+                    μₙ = (1/n)[Σᵢ₌₁ⁿ⁻¹ xᵢ + xₙ]
+                </div>
+
+                <p>Since μₙ₋₁ = (1/(n-1)) Σᵢ₌₁ⁿ⁻¹ xᵢ, we have Σᵢ₌₁ⁿ⁻¹ xᵢ = (n-1)μₙ₋₁</p>
+
+                <p>Substituting:</p>
+                <div class="math-formula">
+                    μₙ = (1/n)[(n-1)μₙ₋₁ + xₙ]<br>
+                    μₙ = ((n-1)/n)μₙ₋₁ + xₙ/n<br>
+                    μₙ = μₙ₋₁ - μₙ₋₁/n + xₙ/n<br>
+                    μₙ = μₙ₋₁ + (xₙ - μₙ₋₁)/n
+                </div>
+
+                <div class="success-box">
+                    <strong>✅ Final Recurrence Relation:</strong>
+                    <div class="math-formula" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; font-size: 1.3rem;">
+                        Mₖ = Mₖ₋₁ + (xₖ - Mₖ₋₁)/k
+                    </div>
+                </div>
+
+                <p><strong>Interpretation:</strong> The new mean equals the old mean plus a fraction (1/k) of the difference 
+                between the new observation and the current mean. This "error correction" approach is numerically stable.</p>
+            </div>
+
+            <div class="example-calculation">
+                <h4>📝 Example: Dataset [2, 4, 6, 8]</h4>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Step (k)</th>
+                            <th>xₖ</th>
+                            <th>Mₖ₋₁</th>
+                            <th>xₖ - Mₖ₋₁</th>
+                            <th>Updated Mₖ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>–</td>
+                            <td>–</td>
+                            <td>2.0000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>2.0000</td>
+                            <td>2.0000</td>
+                            <td>3.0000</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>3.0000</td>
+                            <td>3.0000</td>
+                            <td>4.0000</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>8</td>
+                            <td>4.0000</td>
+                            <td>4.0000</td>
+                            <td>5.0000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>✅ Final mean: 5</strong> (matches classical: (2+4+6+8)/4 = 20/4 = 5)</p>
+            </div>
+
+            <h3>2️⃣ Online Variance (Welford's Algorithm)</h3>
+
+            <div class="proof-box">
+                <h4>Recurrence Relation Proof</h4>
+                
+                <p>The variance is defined as:</p>
+                <div class="math-formula">
+                    σ² = (1/(n-1)) Σᵢ₌₁ⁿ (xᵢ - μ)²
+                </div>
+
+                <p><strong>Welford's Method:</strong></p>
+                <p>We maintain Sₙ = Σᵢ₌₁ⁿ (xᵢ - μₙ)², the sum of squared deviations from the current mean.</p>
+
+                <p><strong>Key Insight:</strong> When we update the mean from μₙ₋₁ to μₙ, all previous deviations change. 
+                However, we can derive an efficient update formula.</p>
+
+                <p><strong>Derivation:</strong></p>
+                <p>Consider the difference Sₙ - Sₙ₋₁:</p>
+                <div class="math-formula">
+                    Sₙ = Σᵢ₌₁ⁿ (xᵢ - μₙ)²<br>
+                    Sₙ₋₁ = Σᵢ₌₁ⁿ⁻¹ (xᵢ - μₙ₋₁)²
+                </div>
+
+                <p>Through algebraic manipulation (expanding squares and using the mean recurrence relation), we obtain:</p>
+
+                <div class="success-box">
+                    <strong>✅ Final Recurrence Relations:</strong>
+                    <div class="math-formula" style="background: rgba(34, 197, 94, 0.2); color: #22c55e; font-size: 1.2rem;">
+                        Mₖ = Mₖ₋₁ + (xₖ - Mₖ₋₁)/k<br>
+                        Sₖ = Sₖ₋₁ + (xₖ - Mₖ₋₁)(xₖ - Mₖ)<br>
+                        σ² = Sₙ/(n-1)
+                    </div>
+                </div>
+
+                <p><strong>Important:</strong> Note that we use both the old mean (Mₖ₋₁) and the new mean (Mₖ) in the variance update. 
+                This clever formulation ensures numerical stability by working with differences rather than large sums.</p>
+            </div>
+
+            <div class="example-calculation">
+                <h4>📝 Example: Dataset [2, 4, 6, 8]</h4>
+                
+                <p><strong>Classical calculation:</strong></p>
+                <ul class="step-list">
+                    <li>Mean μ = 5</li>
+                    <li>(2-5)² = 9</li>
+                    <li>(4-5)² = 1</li>
+                    <li>(6-5)² = 1</li>
+                    <li>(8-5)² = 9</li>
+                    <li>Σ(x-μ)² = 20</li>
+                    <li>σ² = 20/(4-1) = 6.6667</li>
+                </ul>
+
+                <p><strong>Online calculation:</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Step (k)</th>
+                            <th>xₖ</th>
+                            <th>Mean Mₖ</th>
+                            <th>Sₖ</th>
+                            <th>Variance σ²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>2.0000</td>
+                            <td>0.0000</td>
+                            <td>–</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>3.0000</td>
+                            <td>2.0000</td>
+                            <td>2.0000</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>4.0000</td>
+                            <td>8.0000</td>
+                            <td>4.0000</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>8</td>
+                            <td>5.0000</td>
+                            <td>20.0000</td>
+                            <td>6.6667</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>✅ Final variance: 6.6667</strong> (matches classical result)</p>
+            </div>
+
+            <h2>💻 Implementation</h2>
+
+            <div class="code-block">class OnlineStats {
+    constructor() {
+        this.n = 0;     // number of observations
+        this.mean = 0;  // running mean
+        this.S = 0;     // sum of squared deviations
+    }
+
+    update(x) {
+        this.n++;
+        const delta = x - this.mean;
+        this.mean += delta / this.n;
+        const delta2 = x - this.mean;
+        this.S += delta * delta2;
+    }
+
+    getMean() {
+        return this.mean;
+    }
+
+    getVariance() {
+        return this.n > 1 ? this.S / (this.n - 1) : 0;
+    }
+
+    getStdDev() {
+        return Math.sqrt(this.getVariance());
+    }
+
+    getCount() {
+        return this.n;
+    }
+
+    reset() {
+        this.n = 0;
+        this.mean = 0;
+        this.S = 0;
+    }
+}</div>
+
+            <h2>🧪 Interactive Testing</h2>
+
+            <div class="demo-section">
+                <h3>Test Online Algorithm</h3>
+                
+                <div class="form-group">
+                    <label for="dataInput">Enter data values (comma-separated):</label>
+                    <input type="text" id="dataInput" placeholder="e.g., 2, 4, 6, 8" value="2, 4, 6, 8">
+                </div>
+
+                <button onclick="processData()">▶ Process Data</button>
+                <button onclick="generateRandom()" style="background-color: #8b5cf6;">🎲 Random Data</button>
+                <button onclick="clearData()" class="danger">🗑️ Clear</button>
+
+                <div id="statsDisplay" style="display:none; margin-top: 1rem;">
+                    <h3>Results:</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Count (n)</div>
+                            <div class="stat-value" id="statN">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Mean (μ)</div>
+                            <div class="stat-value" id="statMean">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Variance (σ²)</div>
+                            <div class="stat-value" id="statVar">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Std Dev (σ)</div>
+                            <div class="stat-value" id="statStd">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>📈 Step-by-Step Computation</h3>
+                <div style="overflow-x: auto;">
+                    <table id="computationTable" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>k</th>
+                                <th>xₖ</th>
+                                <th>Mₖ₋₁</th>
+                                <th>Mₖ</th>
+                                <th>Sₖ</th>
+                                <th>σ²</th>
+                            </tr>
+                        </thead>
+                        <tbody id="computationBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h2>💬 Optional Discussion: Numerical Analysis</h2>
+
+            <div class="proof-box">
+                <h3>Why Online Algorithms are Superior</h3>
+
+                <h4>1️⃣ Numerical Stability and Catastrophic Cancellation</h4>
+                <p>
+                    The naive batch formula for variance σ² = E[X²] - (E[X])² requires computing the difference 
+                    between two potentially large numbers. When the variance is small relative to the mean squared, 
+                    this leads to <strong>catastrophic cancellation</strong> – a severe loss of precision.
+                </p>
+
+                <div class="warning-box">
+                    <strong>⚠️ Example of Catastrophic Cancellation:</strong>
+                    <p>Consider data centered around 10⁸ with small variance:</p>
+                    <ul>
+                        <li>E[X²] ≈ 10¹⁶ (very large)</li>
+                        <li>(E[X])² ≈ 10¹⁶ (also very large, nearly equal)</li>
+                        <li>Difference: tiny compared to operands</li>
+                        <li>Result: Most significant digits lost in subtraction!</li>
+                    </ul>
+                </div>
+
+                <p>
+                    <strong>Welford's algorithm avoids this</strong> by working with deviations (xₖ - Mₖ₋₁) and (xₖ - Mₖ), 
+                    which are naturally scaled to the data's spread, not its magnitude.
+                </p>
+
+                <h4>2️⃣ Error Propagation Control</h4>
+                <p>
+                    Online algorithms process one observation at a time, limiting error accumulation. Each update involves 
+                    only a few floating-point operations with local data. In contrast, batch algorithms sum many values, 
+                    with rounding errors accumulating proportionally to dataset size.
+                </p>
+
+                <h4>3️⃣ Overflow and Underflow Management</h4>
+                <p>
+                    Computing Σx² in batch mode can overflow for large datasets or large values. For example, 
+                    if xᵢ ≈ 10⁶ and n = 10⁶, then Σx² ≈ 10¹⁸, which may exceed floating-point limits.
+                </p>
+                <p>
+                    <strong>Online variance</strong> using Sₖ = Sₖ₋₁ + (xₖ - Mₖ₋₁)(xₖ - Mₖ) keeps intermediate values 
+                    bounded by approximately n·σ², which grows much more slowly.
+                </p>
+
+                <h4>4️⃣ Memory Efficiency</h4>
+                <p>
+                    <strong>Batch algorithms:</strong> O(n) memory – must store all n observations.<br>
+                    <strong>Online algorithms:</strong> O(1) memory – only store current statistics (n, mean, S).
+                </p>
+                <p>
+                    This makes online methods ideal for embedded systems, IoT devices, and applications with 
+                    memory constraints.
+                </p>
+
+                <h4>5️⃣ Computational Efficiency and Real-Time Processing</h4>
+                <p>
+                    While both approaches have O(n) time complexity, online algorithms enable:
+                </p>
+                <ul>
+                    <li><strong>Single-pass processing:</strong> No need to iterate twice (once for mean, once for variance)</li>
+                    <li><strong>Streaming data:</strong> Process data as it arrives without storage</li>
+                    <li><strong>Real-time monitoring:</strong> Statistics available at any moment</li>
+                    <li><strong>Early stopping:</strong> Can terminate when convergence criteria are met</li>
+                </ul>
+
+                <h4>6️⃣ Robustness and Scalability</h4>
+                <p>
+                    Online algorithms scale naturally with data streams – essential for:
+                </p>
+                <ul>
+                    <li>Sensor networks and IoT applications</li>
+                    <li>Financial tick data processing</li>
+                    <li>Real-time monitoring systems</li>
+                    <li>Big data and distributed computing (combine local statistics)</li>
+                    <li>Machine learning training on large datasets</li>
+                </ul>
+            </div>
+
+            <div class="comparison-table">
+                <h3>📊 Comprehensive Comparison</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Classical (Batch)</th>
+                            <th>Online (Incremental)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Memory Complexity</td>
+                            <td style="color: #dc2626;">O(n)</td>
+                            <td style="color: #22c55e;">O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>Passes Through Data</td>
+                            <td style="color: #dc2626;">2 (mean + variance)</td>
+                            <td style="color: #22c55e;">1</td>
+                        </tr>
+                        <tr>
+                            <td>Numerical Stability</td>
+                            <td style="color: #dc2626;">Poor (cancellation risk)</td>
+                            <td style="color: #22c55e;">Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>Overflow Risk</td>
+                            <td style="color: #dc2626;">High (Σx²)</td>
+                            <td style="color: #22c55e;">Low</td>
+                        </tr>
+                        <tr>
+                            <td>Real-time Processing</td>
+                            <td style="color: #dc2626;">No</td>
+                            <td style="color: #22c55e;">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Streaming Data</td>
+                            <td style="color: #dc2626;">Not suitable</td>
+                            <td style="color: #22c55e;">Ideal</td>
+                        </tr>
+                        <tr>
+                            <td>Scalability</td>
+                            <td style="color: #dc2626;">Limited by memory</td>
+                            <td style="color: #22c55e;">Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Small, static datasets</td>
+                            <td>Large, streaming, real-time data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ Conclusion</h4>
+                <p>
+                    Online algorithms are <strong>numerically stable, memory-efficient, and scalable</strong>, 
+                    making them the preferred approach in modern computational statistics, machine learning, 
+                    and big data applications. They represent a fundamental tool for processing streaming data 
+                    and enable real-time analytics that would be impossible with traditional batch methods.
+                </p>
+            </div>
+
+            <h2>🔬 Numerical Stability Demonstration</h2>
+
+            <div class="demo-section">
+                <h3>Test: Large Values with Small Variance</h3>
+                <p>
+                    This experiment demonstrates catastrophic cancellation in batch algorithms. 
+                    We generate 1000 values around 10⁸ with small random perturbations (±5).
+                </p>
+                
+                <button onclick="stabilityTest()">▶ Run Stability Test</button>
+                
+                <div id="stabilityResult" style="display:none; margin-top: 1rem;"></div>
+            </div>
+        </article>
+
+        <div class="back-home-box">
+            <a href="../index.html" class="back-home-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p><small>&copy; 2025 Francesco Pio Fata – Homework 6</small></p>
+    </footer>
+
+    <script>
+        class OnlineStats {
+            constructor() {
+                this.n = 0;
+                this.mean = 0;
+                this.S = 0;
+            }
+
+            update(x) {
+                this.n++;
+                const delta = x - this.mean;
+                this.mean += delta / this.n;
+                const delta2 = x - this.mean;
+                this.S += delta * delta2;
+            }
+
+            getMean() {
+                return this.mean;
+            }
+
+            getVariance() {
+                return this.n > 1 ? this.S / (this.n - 1) : 0;
+            }
+
+            getStdDev() {
+                return Math.sqrt(this.getVariance());
+            }
+
+            getCount() {
+                return this.n;
+            }
+
+            reset() {
+                this.n = 0;
+                this.mean = 0;
+                this.S = 0;
+            }
+        }
+
+        let currentStats = new OnlineStats();
+        let stepData = [];
+
+        function processData() {
+            const input = document.getElementById('dataInput').value;
+            const values = input.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+
+            if (values.length === 0) {
+                alert('Please enter valid numbers!');
+                return;
+            }
+
+            currentStats.reset();
+            stepData = [];
+
+            values.forEach((value, index) => {
+                const prevMean = currentStats.mean;
+                const prevS = currentStats.S;
+                currentStats.update(value);
+                
+                stepData.push({
+                    step: index + 1,
+                    value: value,
+                    prevMean: prevMean,
+                    mean: currentStats.mean,
+                    S: currentStats.S,
+                    variance: currentStats.getVariance()
+                });
+            });
+
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById('statN').textContent = currentStats.n;
+            document.getElementById('statMean').textContent = currentStats.getMean().toFixed(4);
+            document.getElementById('statVar').textContent = currentStats.getVariance().toFixed(4);
+            document.getElementById('statStd').textContent = currentStats.getStdDev().toFixed(4);
+            document.getElementById('statsDisplay').style.display = 'block';
+
+            const tbody = document.getElementById('computationBody');
+            tbody.innerHTML = stepData.map(row => `
+                <tr>
+                    <td>${row.step}</td>
+                    <td>${row.value.toFixed(2)}</td>
+                    <td>${row.prevMean.toFixed(4)}</td>
+                    <td>${row.mean.toFixed(4)}</td>
+                    <td>${row.S.toFixed(4)}</td>
+                    <td>${row.variance.toFixed(4)}</td>
+                </tr>
+            `).join('');
+            document.getElementById('computationTable').style.display = 'table';
+        }
+
+        function generateRandom() {
+            const count = 20;
+            const randomValues = Array.from({length: count}, () => 
+                (Math.random() * 100).toFixed(2)
+            );
+            document.getElementById('dataInput').value = randomValues.join(', ');
+            processData();
+        }
+
+        function clearData() {
+            document.getElementById('dataInput').value = '';
+            currentStats.reset();
+            stepData = [];
+            document.getElementById('statsDisplay').style.display = 'none';
+            document.getElementById('computationTable').style.display = 'none';
+        }
+
+        function stabilityTest() {
+            const baseValue = 1e8;
+            const values = Array.from({length: 1000}, () => 
+                baseValue + (Math.random() - 0.5) * 10
+            );
+
+            // Online algorithm (Welford)
+            const onlineStats = new OnlineStats();
+            values.forEach(v => onlineStats.update(v));
+            const onlineMean = onlineStats.getMean();
+            const onlineVar = onlineStats.getVariance();
+
+            // Naive batch algorithm (E[X²] - (E[X])²)
+            const n = values.length;
+            const sum = values.reduce((a, b) => a + b, 0);
+            const sumSquares = values.reduce((a, b) => a + b * b, 0);
+            const batchMean = sum / n;
+            const batchVar = (sumSquares / n) - (batchMean * batchMean);
+
+            // Reference variance (two-pass compensated algorithm)
+            const trueMean = batchMean;
+            const trueVar = values.reduce((sum, x) => sum + Math.pow(x - trueMean, 2), 0) / (n - 1);
+
+            const resultDiv = document.getElementById('stabilityResult');
+            
+            const isCatastrophic = batchVar < 0 || Math.abs(batchVar - trueVar) / trueVar > 0.5;
+            
+            resultDiv.innerHTML = `
+                <div class="info-box">
+                    <h4>🧪 Test Configuration</h4>
+                    <p><strong>Dataset:</strong> 1000 values around ${baseValue.toExponential(2)} ± 5</p>
+                    <p><strong>Expected variance:</strong> ~8.33 (since uniform distribution over ±5 has variance ≈ (10²)/12)</p>
+                    <p><strong>Challenge:</strong> Mean² ≈ 10¹⁶, variance ≈ 8 → ratio of ~10⁻¹⁵</p>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Mean</th>
+                            <th>Variance</th>
+                            <th>Relative Error</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(34, 197, 94, 0.1);">
+                            <td><strong>✅ Online (Welford)</strong></td>
+                            <td>${onlineMean.toFixed(2)}</td>
+                            <td>${onlineVar.toFixed(6)}</td>
+                            <td style="color: #22c55e;">${(Math.abs(onlineVar - trueVar) / trueVar * 100).toFixed(3)}%</td>
+                        </tr>
+                        <tr style="background: rgba(220, 38, 38, 0.1);">
+                            <td><strong>❌ Naive Batch</strong></td>
+                            <td>${batchMean.toFixed(2)}</td>
+                            <td style="color: ${batchVar < 0 ? '#dc2626' : '#f1f1f1'};">
+                                ${batchVar < 0 ? 'NEGATIVE!' : batchVar.toFixed(6)}
+                            </td>
+                            <td style="color: #dc2626;">
+                                ${batchVar < 0 ? '∞' : (Math.abs(batchVar - trueVar) / trueVar * 100).toFixed(3) + '%'}
+                            </td>
+                        </tr>
+                        <tr style="background: rgba(59, 130, 246, 0.05);">
+                            <td><strong>📊 Reference</strong></td>
+                            <td>${trueMean.toFixed(2)}</td>
+                            <td>${trueVar.toFixed(6)}</td>
+                            <td>0.000%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="${isCatastrophic ? 'warning-box' : 'success-box'}">
+                    <h4>${isCatastrophic ? '⚠️ CATASTROPHIC CANCELLATION DETECTED!' : '✅ Numerical Comparison'}</h4>
+                    ${isCatastrophic ? `
+                        <p>
+                            The naive batch formula produced ${batchVar < 0 ? 'a <strong>negative variance</strong>' : 'a severely inaccurate result'}, 
+                            demonstrating catastrophic cancellation. When computing E[X²] - (E[X])²:
+                        </p>
+                        <ul>
+                            <li>E[X²] ≈ ${(sumSquares/n).toExponential(6)}</li>
+                            <li>(E[X])² ≈ ${(batchMean * batchMean).toExponential(6)}</li>
+                            <li>Both numbers are nearly identical at ~10¹⁶</li>
+                            <li>Their difference should be ~8, but precision is lost in subtraction</li>
+                            <li><strong>Result:</strong> ${batchVar < 0 ? 'Negative (impossible!)' : 'Completely wrong'}</li>
+                        </ul>
+                        <p>
+                            <strong>Welford's online algorithm</strong> avoids this by working with differences 
+                            (xₖ - Mₖ₋₁) that are scaled to ~5, not 10⁸, maintaining full precision.
+                        </p>
+                    ` : `
+                        <p>
+                            The online algorithm maintains excellent accuracy (${(Math.abs(onlineVar - trueVar) / trueVar * 100).toFixed(3)}% error) 
+                            by avoiding catastrophic cancellation. It works with deviations from the mean rather than 
+                            large squared values, keeping all intermediate calculations numerically stable.
+                        </p>
+                    `}
+                </div>
+
+                <div class="info-box">
+                    <h4>🎓 Key Takeaway</h4>
+                    <p>
+                        When variance is small relative to the mean squared (ratio ~10⁻¹⁵ here), 
+                        the naive formula E[X²] - (E[X])² suffers from catastrophic cancellation because 
+                        it subtracts two nearly-equal large numbers, losing all significant digits.
+                    </p>
+                    <p>
+                        <strong>Welford's algorithm is numerically stable</strong> because it accumulates 
+                        (xᵢ - μₙ₋₁)(xᵢ - μₙ) terms that are naturally bounded by the data's spread, 
+                        not its magnitude.
+                    </p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
