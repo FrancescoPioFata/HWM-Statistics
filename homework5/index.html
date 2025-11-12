@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 5 - Measures of Location & Dispersion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                        url('https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=3000') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        .content-box {
+            max-width: 1200px;       
+            margin: 0 auto;         
+            padding: 2rem;          
+            background: rgba(20, 20, 30, 0.85);  
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        h4 {
+            color: #60a5fa;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        p, li {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 2rem;
+        }
+
+        strong {
+            color: #3b82f6;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.2);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(15, 15, 25, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            border: 2px solid #3b82f6;
+            margin-top: 1rem;
+            font-family: monospace;
+        }
+
+        .stat-card {
+            background: rgba(30, 58, 138, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        .chart-container {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            min-height: 200px;
+        }
+
+        .bar {
+            background: linear-gradient(90deg, #3b82f6, #1e3a8a);
+            height: 30px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .bar:hover {
+            transform: scaleX(1.02);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6; 
+            color: #ffffff; 
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        code {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .formula {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: #a5d6ff;
+            border-left: 4px solid #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Homework 5 - Measures of Location & Dispersion</h1>
+            <p class="subtitle">Understanding Central Tendency and Variability in Statistical Analysis</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>Introduction to Statistical Measures</h2>
+            
+            <p>
+                In statistical analysis, understanding data requires more than just looking at individual values. We need measures that summarize the essential characteristics of a dataset. These measures fall into two fundamental categories:
+            </p>
+
+            <div class="comparison-grid">
+                <div class="info-box">
+                    <h4>📍 Measures of Location (Central Tendency)</h4>
+                    <p>These measures identify a "typical" or "central" value that represents the dataset. They answer the question: <em>"Where is the center of the data?"</em></p>
+                </div>
+                <div class="warning-box">
+                    <h4>📏 Measures of Dispersion (Variability)</h4>
+                    <p>These measures quantify how spread out the data points are from the center. They answer: <em>"How much do the values vary?"</em></p>
+                </div>
+            </div>
+
+            <section>
+                <h2>Measures of Central Tendency (Location)</h2>
+
+                <h3>1. Arithmetic Mean (μ or x̄)</h3>
+                <p>
+                    The <strong>arithmetic mean</strong> is the most common measure of central tendency, calculated by summing all values and dividing by the number of observations.
+                </p>
+                <div class="formula">
+                    μ = (Σ xᵢ) / n = (x₁ + x₂ + ... + xₙ) / n
+                </div>
+                
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Mathematical elegance:</strong> The mean has well-defined mathematical properties and is used in many statistical formulas</li>
+                    <li><strong>Efficiency:</strong> Uses all data points, making it a good estimator for symmetric distributions</li>
+                    <li><strong>Familiarity:</strong> Widely understood and used in everyday contexts</li>
+                    <li><strong>Central Limit Theorem:</strong> Sample means approach normal distribution regardless of underlying distribution</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>Sensitivity to outliers:</strong> Extreme values can heavily distort the mean</li>
+                    <li><strong>Skewed distributions:</strong> May not represent the "typical" value in asymmetric data</li>
+                    <li><strong>Non-robust:</strong> A single extreme value can change the mean significantly</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>Normally distributed or symmetric data</li>
+                    <li>Continuous measurement data (temperature, height, weight)</li>
+                    <li>When mathematical operations are needed (ANOVA, regression)</li>
+                    <li>Financial calculations (average returns, costs)</li>
+                </ul>
+
+                <h3>2. Median (Q₂)</h3>
+                <p>
+                    The <strong>median</strong> is the middle value when data is ordered. For an even number of observations, it's the average of the two middle values. It represents the 50th percentile.
+                </p>
+                <div class="formula">
+                    Median = {
+                        x₍ₙ₊₁₎/₂    if n is odd
+                        (x₍ₙ/₂₎ + x₍ₙ/₂₊₁₎) / 2    if n is even
+                    }
+                </div>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Robust to outliers:</strong> Extreme values don't affect the median's position</li>
+                    <li><strong>Intuitive interpretation:</strong> Exactly half the data is below and half above</li>
+                    <li><strong>Works with ordinal data:</strong> Can be used with ranked data (e.g., satisfaction ratings)</li>
+                    <li><strong>Better for skewed distributions:</strong> Represents the center more accurately when data is asymmetric</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>Less efficient:</strong> Doesn't use all information in the dataset</li>
+                    <li><strong>Limited mathematical properties:</strong> Cannot be easily manipulated algebraically</li>
+                    <li><strong>Sample variability:</strong> Can be unstable with small samples</li>
+                    <li><strong>Computational complexity:</strong> Requires sorting the data</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>Income/wealth data (typically right-skewed)</li>
+                    <li>Real estate prices</li>
+                    <li>Data with known outliers</li>
+                    <li>Ordinal scales (Likert scales, rankings)</li>
+                </ul>
+
+                <h3>3. Mode</h3>
+                <p>
+                    The <strong>mode</strong> is the value that appears most frequently in the dataset. A distribution can be unimodal (one mode), bimodal (two modes), or multimodal (multiple modes).
+                </p>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Works with categorical data:</strong> The only measure of central tendency for nominal data</li>
+                    <li><strong>Identifies peaks:</strong> Reveals the most common or popular value</li>
+                    <li><strong>Multimodality detection:</strong> Can identify multiple centers in the data</li>
+                    <li><strong>Simple interpretation:</strong> Easy to understand and communicate</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>May not exist:</strong> No repeated values means no mode</li>
+                    <li><strong>Non-unique:</strong> Multiple modes can exist</li>
+                    <li><strong>Unstable:</strong> Sensitive to binning choices for continuous data</li>
+                    <li><strong>Ignores magnitude:</strong> Doesn't consider actual values, only frequency</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>Categorical data (most common color, brand preference)</li>
+                    <li>Discrete data (number of children, shoe sizes)</li>
+                    <li>Identifying popular choices in surveys</li>
+                    <li>Quality control (most frequent defect type)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Measures of Dispersion (Variability)</h2>
+
+                <h3>1. Variance (σ² or s²)</h3>
+                <p>
+                    The <strong>variance</strong> measures the average squared deviation from the mean. It quantifies how far values spread from the average.
+                </p>
+                <div class="formula">
+                    Population: σ² = Σ(xᵢ - μ)² / N
+                    <br>
+                    Sample: s² = Σ(xᵢ - x̄)² / (n-1)
+                </div>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Mathematical properties:</strong> Variance is additive for independent variables</li>
+                    <li><strong>Statistical theory:</strong> Fundamental to ANOVA, regression, and hypothesis testing</li>
+                    <li><strong>Optimal estimator:</strong> Unbiased estimator of population variance</li>
+                    <li><strong>Decomposition:</strong> Can be partitioned into components (within-group, between-group)</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>Squared units:</strong> Not in the same units as the original data</li>
+                    <li><strong>Sensitive to outliers:</strong> Extreme values are squared, magnifying their effect</li>
+                    <li><strong>Less intuitive:</strong> Harder to interpret than standard deviation</li>
+                    <li><strong>Assumes interval data:</strong> Not appropriate for ordinal or nominal data</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>ANOVA and hypothesis testing</li>
+                    <li>Portfolio theory (risk analysis)</li>
+                    <li>Quality control (process variation)</li>
+                    <li>Theoretical statistical derivations</li>
+                </ul>
+
+                <h3>2. Standard Deviation (σ or s)</h3>
+                <p>
+                    The <strong>standard deviation</strong> is the square root of variance, bringing the measure of spread back to the original units.
+                </p>
+                <div class="formula">
+                    σ = √(σ²)    or    s = √(s²)
+                </div>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Same units as data:</strong> Directly interpretable in context</li>
+                    <li><strong>Empirical rule:</strong> For normal distributions, ~68% of data falls within ±1σ, ~95% within ±2σ</li>
+                    <li><strong>Widely reported:</strong> Standard measure in research and industry</li>
+                    <li><strong>Standardization:</strong> Used to create z-scores for comparison</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>Outlier sensitivity:</strong> Affected by extreme values (though less than variance)</li>
+                    <li><strong>Assumes normal distribution:</strong> Empirical rule only applies to bell-shaped data</li>
+                    <li><strong>Non-robust:</strong> Can be misleading with skewed distributions</li>
+                    <li><strong>Not always meaningful:</strong> Less useful for non-numeric or categorical data</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>Reporting spread alongside mean</li>
+                    <li>Comparing variability across similar datasets</li>
+                    <li>Standardizing scores (z-scores)</li>
+                    <li>Process control charts</li>
+                </ul>
+
+                <h3>3. Interquartile Range (IQR)</h3>
+                <p>
+                    The <strong>IQR</strong> is the range between the 75th percentile (Q₃) and the 25th percentile (Q₁), representing the middle 50% of the data.
+                </p>
+                <div class="formula">
+                    IQR = Q₃ - Q₁
+                </div>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Robust to outliers:</strong> Only considers middle 50% of data</li>
+                    <li><strong>Pairs well with median:</strong> Natural companion for median-based summaries</li>
+                    <li><strong>Outlier detection:</strong> Used in box plots to identify extreme values (1.5×IQR rule)</li>
+                    <li><strong>Distribution-free:</strong> No assumptions about data shape needed</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>Ignores tails:</strong> Doesn't account for behavior in extremes</li>
+                    <li><strong>Less efficient:</strong> Uses only quartile information, not all data</li>
+                    <li><strong>Sample size dependency:</strong> Requires sufficient data for stable quartiles</li>
+                    <li><strong>Limited mathematical properties:</strong> Not as algebraically tractable as variance</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>Exploratory data analysis</li>
+                    <li>Data with outliers or skewness</li>
+                    <li>Box plot visualization</li>
+                    <li>Comparing spread in non-normal distributions</li>
+                </ul>
+
+                <h3>4. Range</h3>
+                <p>
+                    The <strong>range</strong> is simply the difference between the maximum and minimum values in the dataset.
+                </p>
+                <div class="formula">
+                    Range = max(x) - min(x)
+                </div>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Simplicity:</strong> Easiest measure of spread to calculate and understand</li>
+                    <li><strong>Quick assessment:</strong> Provides immediate sense of data span</li>
+                    <li><strong>No assumptions:</strong> Works with any type of numerical data</li>
+                    <li><strong>Practical applications:</strong> Useful in quality control for specification limits</li>
+                </ul>
+
+                <h4>Limitations:</h4>
+                <ul>
+                    <li><strong>Extremely sensitive to outliers:</strong> One extreme value can dramatically change it</li>
+                    <li><strong>Ignores distribution shape:</strong> Doesn't reflect how data is spread between extremes</li>
+                    <li><strong>Sample size dependency:</strong> Tends to increase with larger samples</li>
+                    <li><strong>Unstable:</strong> Highly variable across different samples</li>
+                </ul>
+
+                <h4>Best Applications:</h4>
+                <ul>
+                    <li>Small datasets for quick assessment</li>
+                    <li>Quality control (acceptable range)</li>
+                    <li>Preliminary data exploration</li>
+                    <li>Setting scale for visualizations</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Interactive Calculator</h2>
+                
+                <div class="info-box">
+                    <strong>💡 Try It Yourself:</strong> Enter your own dataset below to calculate all measures of location and dispersion simultaneously. This will help you understand how different measures respond to the same data.
+                </div>
+
+                <div class="demo-section">
+                    <div class="form-group">
+                        <label for="dataInput">Enter data values (comma-separated):</label>
+                        <textarea id="dataInput" rows="3" placeholder="Example: 12, 15, 18, 20, 22, 25, 28, 100">12, 15, 18, 20, 22, 25, 28, 100</textarea>
+                    </div>
+                    <button onclick="calculateStats()">📊 Calculate All Statistics</button>
+                    <button onclick="generateSample('normal')">🎲 Generate Normal Data</button>
+                    <button onclick="generateSample('skewed')">📈 Generate Skewed Data</button>
+                    <button onclick="generateSample('outliers')">⚠️ Generate Data with Outliers</button>
+
+                    <div id="statsResults" style="display:none; margin-top: 1rem;">
+                        <h3>Results</h3>
+                        
+                        <div class="comparison-grid">
+                            <div>
+                                <h4>📍 Measures of Location</h4>
+                                <div class="stat-card">
+                                    <strong>Mean:</strong> <span class="stat-value" id="meanValue"></span>
+                                </div>
+                                <div class="stat-card">
+                                    <strong>Median:</strong> <span class="stat-value" id="medianValue"></span>
+                                </div>
+                                <div class="stat-card">
+                                    <strong>Mode:</strong> <span class="stat-value" id="modeValue"></span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4>📏 Measures of Dispersion</h4>
+                                <div class="stat-card">
+                                    <strong>Variance:</strong> <span class="stat-value" id="varianceValue"></span>
+                                </div>
+                                <div class="stat-card">
+                                    <strong>Std Deviation:</strong> <span class="stat-value" id="stdValue"></span>
+                                </div>
+                                <div class="stat-card">
+                                    <strong>IQR:</strong> <span class="stat-value" id="iqrValue"></span>
+                                </div>
+                                <div class="stat-card">
+                                    <strong>Range:</strong> <span class="stat-value" id="rangeValue"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <h4>Data Visualization</h4>
+                            <canvas id="dataChart" width="800" height="300"></canvas>
+                        </div>
+
+                        <div class="info-box" id="interpretation"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Choosing the Right Measures</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Characteristic</th>
+                            <th>Recommended Location Measure</th>
+                            <th>Recommended Dispersion Measure</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Symmetric, no outliers</td>
+                            <td>Mean</td>
+                            <td>Standard Deviation</td>
+                            <td>Most efficient and mathematically tractable</td>
+                        </tr>
+                        <tr>
+                            <td>Skewed distribution</td>
+                            <td>Median</td>
+                            <td>IQR</td>
+                            <td>Robust to asymmetry and extreme values</td>
+                        </tr>
+                        <tr>
+                            <td>Contains outliers</td>
+                            <td>Median</td>
+                            <td>IQR or MAD</td>
+                            <td>Outliers don't affect these measures</td>
+                        </tr>
+                        <tr>
+                            <td>Categorical data</td>
+                            <td>Mode</td>
+                            <td>N/A</td>
+                            <td>Only applicable measure for categories</td>
+                        </tr>
+                        <tr>
+                            <td>Ordinal data</td>
+                            <td>Median</td>
+                            <td>IQR</td>
+                            <td>Respects rank order without assuming equal intervals</td>
+                        </tr>
+                        <tr>
+                            <td>Financial returns</td>
+                            <td>Mean</td>
+                            <td>Standard Deviation (Volatility)</td>
+                            <td>Standard in finance; variance is additive</td>
+                        </tr>
+                        <tr>
+                            <td>Small sample size</td>
+                            <td>Mean</td>
+                            <td>Standard Deviation</td>
+                            <td>More stable than median/IQR with few observations</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <strong>⚠️ Important Note:</strong> Always visualize your data first! A histogram or box plot can immediately reveal whether your data is symmetric, skewed, or contains outliers, guiding your choice of statistical measures.
+                </div>
+            </section>
+
+            <section>
+                <h2>Real-World Example: Income Analysis</h2>
+                
+                <p>
+                    Consider analyzing income data for a company with 10 employees. This example demonstrates why choosing the right measures matters.
+                </p>
+
+                <div class="demo-section">
+                    <h4>Employee Annual Salaries (in thousands):</h4>
+                    <div class="result-box" id="salaryData">
+                        35, 38, 42, 45, 48, 50, 52, 55, 58, 250
+                    </div>
+                    
+                    <button onclick="analyzeSalaries()">📊 Analyze Salary Data</button>
+                    
+                    <div id="salaryAnalysis" style="display:none; margin-top: 1rem;">
+                        <div class="comparison-grid">
+                            <div class="stat-card">
+                                <strong>Mean Salary:</strong> <span class="stat-value" id="salaryMean"></span>k
+                                <p style="margin-top: 0.5rem; font-size: 0.9rem;">The average is inflated by the CEO's salary</p>
+                            </div>
+                            <div class="stat-card">
+                                <strong>Median Salary:</strong> <span class="stat-value" id="salaryMedian"></span>k
+                                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Better represents typical employee salary</p>
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="margin-top: 1rem;">
+                            <strong>💡 Interpretation:</strong> The mean salary of <span id="salaryMeanText"></span>k is misleading because one executive (CEO at 250k) skews the average upward. The median of <span id="salaryMedianText"></span>k better represents what a "typical" employee earns. This illustrates why median and IQR are preferred for income data.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Summary and Best Practices</h2>
+                
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li><strong>No single measure is always best:</strong> The choice depends on data characteristics, research questions, and practical context</li>
+                    <li><strong>Report multiple measures:</strong> Presenting both location and dispersion provides a complete picture</li>
+                    <li><strong>Visualize first:</strong> Graphs reveal data structure before choosing statistics</li>
+                    <li><strong>Consider robustness:</strong> Robust measures (median, IQR) are safer when data quality is uncertain</li>
+                    <li><strong>Match measures to goals:</strong> Theoretical work may require mean/variance; practical reporting may benefit from median/IQR</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>📋 Quick Reference Guide</h4>
+                    <p><strong>Symmetric data without outliers:</strong> Mean ± Standard Deviation</p>
+                    <p><strong>Skewed data or data with outliers:</strong> Median with IQR</p>
+                    <p><strong>Categorical data:</strong> Mode with frequency counts</p>
+                    <p><strong>Small samples (n &lt; 30):</strong> Consider both approaches and check for outliers</p>
+                </div>
+
+                <h3>Advanced Considerations</h3>
+                <ul>
+                    <li><strong>Coefficient of Variation (CV):</strong> Use σ/μ to compare variability across datasets with different units or scales</li>
+                    <li><strong>Trimmed Mean:</strong> Compromise between mean and median by removing a percentage of extreme values</li>
+                    <li><strong>Median Absolute Deviation (MAD):</strong> Even more robust than IQR for heavy-tailed distributions</li>
+                    <li><strong>Geometric Mean:</strong> Appropriate for ratios, rates of change, and multiplicative processes</li>
+                </ul>
+            </section>
+        </article>
+
+        <div class="back-home-box">
+            <a href="../index.html" class="back-home-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p><small>&copy; 2025 Francesco Pio Fata – Homework 5</small></p>
+    </footer>
+
+    <script>
+        // Statistical calculation functions
+        function calculateMean(data) {
+            return data.reduce((sum, val) => sum + val, 0) / data.length;
+        }
+
+        function calculateMedian(data) {
+            const sorted = [...data].sort((a, b) => a - b);
+            const mid = Math.floor(sorted.length / 2);
+            return sorted.length % 2 === 0 
+                ? (sorted[mid - 1] + sorted[mid]) / 2 
+                : sorted[mid];
+        }
+
+        function calculateMode(data) {
+            const freq = {};
+            data.forEach(val => freq[val] = (freq[val] || 0) + 1);
+            const maxFreq = Math.max(...Object.values(freq));
+            const modes = Object.keys(freq).filter(key => freq[key] === maxFreq);
+            
+            if (modes.length === data.length) return "No mode";
+            return modes.length === 1 ? parseFloat(modes[0]) : modes.map(m => parseFloat(m)).join(", ");
+        }
+
+        function calculateVariance(data) {
+            const mean = calculateMean(data);
+            const squaredDiffs = data.map(val => Math.pow(val - mean, 2));
+            return squaredDiffs.reduce((sum, val) => sum + val, 0) / (data.length - 1);
+        }
+
+        function calculateStd(data) {
+            return Math.sqrt(calculateVariance(data));
+        }
+
+        function calculateIQR(data) {
+            const sorted = [...data].sort((a, b) => a - b);
+            const q1Index = Math.floor(sorted.length * 0.25);
+            const q3Index = Math.floor(sorted.length * 0.75);
+            return sorted[q3Index] - sorted[q1Index];
+        }
+
+        function calculateRange(data) {
+            return Math.max(...data) - Math.min(...data);
+        }
+
+        function calculateStats() {
+            const input = document.getElementById('dataInput').value;
+            const data = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+            
+            if (data.length === 0) {
+                alert('Please enter valid numeric data');
+                return;
+            }
+
+            const mean = calculateMean(data);
+            const median = calculateMedian(data);
+            const mode = calculateMode(data);
+            const variance = calculateVariance(data);
+            const std = calculateStd(data);
+            const iqr = calculateIQR(data);
+            const range = calculateRange(data);
+
+            document.getElementById('meanValue').textContent = mean.toFixed(2);
+            document.getElementById('medianValue').textContent = median.toFixed(2);
+            document.getElementById('modeValue').textContent = mode;
+            document.getElementById('varianceValue').textContent = variance.toFixed(2);
+            document.getElementById('stdValue').textContent = std.toFixed(2);
+            document.getElementById('iqrValue').textContent = iqr.toFixed(2);
+            document.getElementById('rangeValue').textContent = range.toFixed(2);
+
+            // Interpretation
+            const diff = Math.abs(mean - median);
+            let interpretation = '';
+            if (diff < std * 0.1) {
+                interpretation = '✅ The mean and median are very close, suggesting the data is approximately symmetric with few outliers.';
+            } else if (mean > median) {
+                interpretation = '📈 The mean is higher than the median, indicating right-skewed data (positive skew). This often occurs with outliers on the high end.';
+            } else {
+                interpretation = '📉 The mean is lower than the median, indicating left-skewed data (negative skew). This suggests outliers on the low end.';
+            }
+            
+            document.getElementById('interpretation').innerHTML = `<strong>Interpretation:</strong> ${interpretation}`;
+            document.getElementById('statsResults').style.display = 'block';
+
+            // Draw simple visualization
+            drawDataVisualization(data, mean, median);
+        }
+
+        function drawDataVisualization(data, mean, median) {
+            const canvas = document.getElementById('dataChart');
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Sort data for visualization
+            const sorted = [...data].sort((a, b) => a - b);
+            const min = Math.min(...sorted);
+            const max = Math.max(...sorted);
+            const range = max - min;
+            
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(50, 250);
+            ctx.lineTo(750, 250);
+            ctx.stroke();
+            
+            // Draw data points
+            sorted.forEach((val, idx) => {
+                const x = 50 + (700 * (val - min) / range);
+                const y = 250 - (idx * 200 / sorted.length);
+                
+                ctx.fillStyle = '#60a5fa';
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Connect points
+                if (idx > 0) {
+                    const prevVal = sorted[idx - 1];
+                    const prevX = 50 + (700 * (prevVal - min) / range);
+                    const prevY = 250 - ((idx - 1) * 200 / sorted.length);
+                    
+                    ctx.strokeStyle = '#3b82f6';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(prevX, prevY);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                }
+            });
+            
+            // Draw mean line
+            const meanX = 50 + (700 * (mean - min) / range);
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(meanX, 30);
+            ctx.lineTo(meanX, 250);
+            ctx.stroke();
+            ctx.fillStyle = '#ef4444';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('Mean', meanX - 20, 20);
+            
+            // Draw median line
+            const medianX = 50 + (700 * (median - min) / range);
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(medianX, 30);
+            ctx.lineTo(medianX, 250);
+            ctx.stroke();
+            ctx.fillStyle = '#10b981';
+            ctx.fillText('Median', medianX - 25, 20);
+            
+            ctx.setLineDash([]);
+        }
+
+        function generateSample(type) {
+            let data = [];
+            
+            if (type === 'normal') {
+                // Generate roughly normal data
+                for (let i = 0; i < 50; i++) {
+                    const u1 = Math.random();
+                    const u2 = Math.random();
+                    const z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+                    data.push(Math.round((z * 10 + 50) * 10) / 10);
+                }
+            } else if (type === 'skewed') {
+                // Generate right-skewed data
+                for (let i = 0; i < 50; i++) {
+                    const val = Math.pow(Math.random(), 2) * 100;
+                    data.push(Math.round(val * 10) / 10);
+                }
+            } else if (type === 'outliers') {
+                // Generate normal data with outliers
+                for (let i = 0; i < 47; i++) {
+                    const val = Math.random() * 20 + 40;
+                    data.push(Math.round(val * 10) / 10);
+                }
+                data.push(150, 175, 200); // Add outliers
+            }
+            
+            document.getElementById('dataInput').value = data.join(', ');
+            calculateStats();
+        }
+
+        function analyzeSalaries() {
+            const salaries = [35, 38, 42, 45, 48, 50, 52, 55, 58, 250];
+            const mean = calculateMean(salaries);
+            const median = calculateMedian(salaries);
+            
+            document.getElementById('salaryMean').textContent = mean.toFixed(1);
+            document.getElementById('salaryMedian').textContent = median.toFixed(1);
+            document.getElementById('salaryMeanText').textContent = mean.toFixed(1);
+            document.getElementById('salaryMedianText').textContent = median.toFixed(1);
+            document.getElementById('salaryAnalysis').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
