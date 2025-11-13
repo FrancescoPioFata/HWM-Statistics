@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 7 - Security Random Walk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        h4 {
+            color: #60a5fa;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        .content-box {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.85);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        .proof-box {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .math-formula {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            color: #a5d6ff;
+            overflow-x: auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.2);
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.2);
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="range"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        input[type="range"] {
+            padding: 0;
+            height: 40px;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #4b5563;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-card {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #3b82f6;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            color: #f1f1f1;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        #trajectoryCanvas, #distributionCanvas {
+            width: 100%;
+            height: 400px;
+            background: rgba(15, 15, 25, 0.9);
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 2px solid #3b82f6;
+        }
+
+        .slider-value {
+            display: inline-block;
+            min-width: 50px;
+            text-align: center;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔐 Homework 7 - Security Random Walk Simulation</h1>
+            <p class="subtitle">Server Security, Attack Simulations & Convergence to Binomial Distribution</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>🎯 Problem Statement</h2>
+            
+            <p>
+                Consider a server that receives weekly security updates for <code>n</code> weeks. There are <code>m</code> attackers,
+                each attempting to breach the system with probability <code>p</code> per week. For each week:
+            </p>
+            
+            <ul>
+                <li><strong>+1 point</strong> if the server remains secure (no successful breach)</li>
+                <li><strong>-1 point</strong> if at least one attacker breaches the system</li>
+            </ul>
+
+            <p>
+                This creates a <strong>random walk</strong> where the cumulative score evolves over time. We simulate multiple
+                trajectories and analyze how the distribution of final scores converges to a binomial distribution as the number
+                of trajectories increases.
+            </p>
+
+            <h2>📊 Mathematical Framework</h2>
+
+            <div class="proof-box">
+                <h3>Random Walk Model</h3>
+                
+                <p>Each week, the probability that the server remains secure is:</p>
+                <div class="math-formula">
+                    P(secure) = (1 - p)^m
+                </div>
+                
+                <p>This is because all <code>m</code> attackers must fail independently.</p>
+                
+                <p>The probability of at least one breach is:</p>
+                <div class="math-formula">
+                    P(breach) = 1 - (1 - p)^m
+                </div>
+
+                <h4>Cumulative Score</h4>
+                <p>After <code>n</code> weeks, if there were <code>k</code> secure weeks and <code>(n-k)</code> breached weeks:</p>
+                <div class="math-formula">
+                    Score = k × (+1) + (n-k) × (-1) = 2k - n
+                </div>
+                
+                <p>The number of secure weeks <code>k</code> follows a binomial distribution:</p>
+                <div class="math-formula">
+                    k ~ Binomial(n, (1-p)^m)
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📈 Convergence Property</h4>
+                <p>
+                    As we simulate more trajectories (<code>m → ∞</code>), the empirical distribution of final scores
+                    converges to the theoretical binomial distribution by the <strong>Law of Large Numbers</strong>.
+                    The score distribution is symmetric around the expected value when <code>p = 0.5</code>.
+                </p>
+            </div>
+
+            <h2>🧪 Interactive Simulation</h2>
+
+            <div class="demo-section">
+                <h3>Configure Simulation Parameters</h3>
+                
+                <div class="form-group">
+                    <label for="nWeeks">Number of Weeks (n): <span class="slider-value" id="nValue">10</span></label>
+                    <input type="range" id="nWeeks" min="5" max="50" value="10" step="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="mTrajectories">Number of Trajectories (m): <span class="slider-value" id="mValue">100</span></label>
+                    <input type="range" id="mTrajectories" min="10" max="1000" value="100" step="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="pBreach">Breach Probability (p): <span class="slider-value" id="pValue">0.30</span></label>
+                    <input type="range" id="pBreach" min="0.01" max="0.99" value="0.30" step="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label for="numAttackers">Number of Attackers: <span class="slider-value" id="aValue">1</span></label>
+                    <input type="range" id="numAttackers" min="1" max="10" value="1" step="1">
+                </div>
+
+                <button onclick="runSimulation()">▶ Run Simulation</button>
+                <button onclick="runConvergenceTest()" style="background-color: #8b5cf6;">📊 Convergence Test</button>
+            </div>
+
+            <div id="resultsSection" style="display:none;">
+                <h3>📈 Simulation Results</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Weeks (n)</div>
+                        <div class="stat-value" id="statWeeks">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Trajectories (m)</div>
+                        <div class="stat-value" id="statTrajectories">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Mean Score</div>
+                        <div class="stat-value" id="statMean">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Security Rate</div>
+                        <div class="stat-value" id="statSecure">0%</div>
+                    </div>
+                </div>
+
+                <h4>Random Walk Trajectories (Sample)</h4>
+                <canvas id="trajectoryCanvas"></canvas>
+
+                <h4>Score Distribution vs Binomial</h4>
+                <canvas id="distributionCanvas"></canvas>
+
+                <div id="convergenceInfo" class="success-box" style="display:none;">
+                    <h4>✅ Convergence Analysis</h4>
+                    <p id="convergenceText"></p>
+                </div>
+            </div>
+
+            <h2>💡 Key Insights</h2>
+
+            <div class="proof-box">
+                <h3>Connection to Binomial Distribution</h3>
+                
+                <p>
+                    The final score distribution is directly related to the binomial distribution because each week
+                    is an independent Bernoulli trial with two outcomes:
+                </p>
+                
+                <ul>
+                    <li><strong>Success</strong> (secure week): probability q = (1-p)^m</li>
+                    <li><strong>Failure</strong> (breached week): probability 1-q</li>
+                </ul>
+
+                <p>The number of successes in <code>n</code> trials follows:</p>
+                <div class="math-formula">
+                    P(k secure weeks) = C(n,k) × q^k × (1-q)^(n-k)
+                </div>
+
+                <p>As the number of simulated trajectories grows, the histogram converges to this theoretical distribution.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>🎲 Random Walk Interpretation</h4>
+                <p>
+                    Each trajectory is a random walk starting at score 0. At each step (week), the walk moves:
+                </p>
+                <ul>
+                    <li><strong>+1</strong> with probability (1-p)^m</li>
+                    <li><strong>-1</strong> with probability 1-(1-p)^m</li>
+                </ul>
+                <p>
+                    After <code>n</code> steps, possible scores range from <code>-n</code> (all breaches) to <code>+n</code>
+                    (all secure). The distribution becomes more concentrated as we simulate more trajectories.
+                </p>
+            </div>
+
+            <h2>🔬 Numerical Experiments</h2>
+
+            <div class="demo-section">
+                <h3>Convergence Test Results</h3>
+                <p>
+                    This section will show how the empirical distribution converges to the binomial distribution
+                    as the number of trajectories increases from 10 to 1000.
+                </p>
+                <div id="convergenceResults"></div>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ Conclusions</h4>
+                <p>
+                    This simulation demonstrates the fundamental connection between random walks and binomial distributions.
+                    As we increase the number of simulated server trajectories, the empirical score distribution converges
+                    to the theoretical binomial distribution, validating both the probabilistic model and the Law of Large Numbers.
+                </p>
+                <p>
+                    The model provides insights into cybersecurity risk assessment: even with low individual breach probabilities,
+                    multiple attackers can significantly compromise system security over time.
+                </p>
+            </div>
+        </article>
+
+        <div class="back-home-box">
+            <a href="../index.html" class="back-home-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p><small>&copy; 2025 Francesco Pio Fata – Homework 7</small></p>
+    </footer>
+
+    <script>
+        // Update slider displays
+        document.getElementById('nWeeks').addEventListener('input', (e) => {
+            document.getElementById('nValue').textContent = e.target.value;
+        });
+        document.getElementById('mTrajectories').addEventListener('input', (e) => {
+            document.getElementById('mValue').textContent = e.target.value;
+        });
+        document.getElementById('pBreach').addEventListener('input', (e) => {
+            document.getElementById('pValue').textContent = parseFloat(e.target.value).toFixed(2);
+        });
+        document.getElementById('numAttackers').addEventListener('input', (e) => {
+            document.getElementById('aValue').textContent = e.target.value;
+        });
+
+        function runSimulation() {
+            const n = parseInt(document.getElementById('nWeeks').value);
+            const m = parseInt(document.getElementById('mTrajectories').value);
+            const p = parseFloat(document.getElementById('pBreach').value);
+            const attackers = parseInt(document.getElementById('numAttackers').value);
+
+            const q = Math.pow(1 - p, attackers); // Probability of staying secure
+
+            // Generate trajectories
+            const trajectories = [];
+            const finalScores = [];
+            
+            for (let i = 0; i < m; i++) {
+                const trajectory = [0];
+                let score = 0;
+                
+                for (let week = 0; week < n; week++) {
+                    const secure = Math.random() < q;
+                    score += secure ? 1 : -1;
+                    trajectory.push(score);
+                }
+                
+                trajectories.push(trajectory);
+                finalScores.push(score);
+            }
+
+            // Calculate statistics
+            const meanScore = finalScores.reduce((a, b) => a + b, 0) / m;
+            const secureWeeks = trajectories.reduce((sum, traj) => {
+                return sum + traj.filter((s, i) => i > 0 && traj[i] > traj[i-1]).length;
+            }, 0);
+            const totalWeeks = m * n;
+            const secureRate = (secureWeeks / totalWeeks * 100).toFixed(1);
+
+            // Update display
+            document.getElementById('statWeeks').textContent = n;
+            document.getElementById('statTrajectories').textContent = m;
+            document.getElementById('statMean').textContent = meanScore.toFixed(2);
+            document.getElementById('statSecure').textContent = secureRate + '%';
+            document.getElementById('resultsSection').style.display = 'block';
+
+            // Draw trajectories (sample of 50)
+            drawTrajectories(trajectories.slice(0, Math.min(50, m)), n);
+
+            // Draw distribution
+            drawDistribution(finalScores, n, q);
+        }
+
+        function drawTrajectories(trajectories, n) {
+            const canvas = document.getElementById('trajectoryCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width = canvas.offsetWidth;
+            const height = canvas.height = 400;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const padding = 40;
+            const graphWidth = width - 2 * padding;
+            const graphHeight = height - 2 * padding;
+
+            // Find min and max scores
+            let minScore = 0, maxScore = 0;
+            trajectories.forEach(traj => {
+                traj.forEach(score => {
+                    minScore = Math.min(minScore, score);
+                    maxScore = Math.max(maxScore, score);
+                });
+            });
+
+            const range = maxScore - minScore || 1;
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Draw zero line
+            const zeroY = padding + graphHeight * (maxScore / range);
+            ctx.strokeStyle = '#60a5fa';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(padding, zeroY);
+            ctx.lineTo(width - padding, zeroY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw trajectories
+            trajectories.forEach((traj, idx) => {
+                const alpha = Math.min(1, 10 / trajectories.length);
+                ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                
+                traj.forEach((score, week) => {
+                    const x = padding + (week / n) * graphWidth;
+                    const y = padding + graphHeight * ((maxScore - score) / range);
+                    
+                    if (week === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                
+                ctx.stroke();
+            });
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Weeks →', width - padding - 40, height - padding + 25);
+            ctx.save();
+            ctx.translate(15, padding + graphHeight / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Score', 0, 0);
+            ctx.restore();
+        }
+
+        function drawDistribution(finalScores, n, q) {
+            const canvas = document.getElementById('distributionCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width = canvas.offsetWidth;
+            const height = canvas.height = 400;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const padding = 40;
+            const graphWidth = width - 2 * padding;
+            const graphHeight = height - 2 * padding;
+
+            // Count frequencies
+            const counts = {};
+            finalScores.forEach(score => {
+                counts[score] = (counts[score] || 0) + 1;
+            });
+
+            const scores = Object.keys(counts).map(Number).sort((a, b) => a - b);
+            const maxCount = Math.max(...Object.values(counts));
+
+            // Calculate binomial probabilities
+            const binomial = {};
+            for (let k = 0; k <= n; k++) {
+                const score = 2 * k - n;
+                binomial[score] = binomialPMF(n, k, q) * finalScores.length;
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Draw bars
+            const barWidth = graphWidth / (scores.length + 1);
+            
+            scores.forEach((score, idx) => {
+                const x = padding + (idx + 0.5) * barWidth;
+                const empirical = counts[score];
+                const theoretical = binomial[score] || 0;
+                
+                const empHeight = (empirical / maxCount) * graphHeight * 0.9;
+                const theoHeight = (theoretical / maxCount) * graphHeight * 0.9;
+                
+                // Empirical (blue)
+                ctx.fillStyle = 'rgba(59, 130, 246, 0.6)';
+                ctx.fillRect(x - barWidth * 0.35, height - padding - empHeight, barWidth * 0.3, empHeight);
+                
+                // Theoretical (green)
+                ctx.fillStyle = 'rgba(34, 197, 94, 0.6)';
+                ctx.fillRect(x + barWidth * 0.05, height - padding - theoHeight, barWidth * 0.3, theoHeight);
+            });
+
+            // Legend
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.6)';
+            ctx.fillRect(width - padding - 150, padding + 10, 20, 15);
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Empirical', width - padding - 125, padding + 22);
+            
+            ctx.fillStyle = 'rgba(34, 197, 94, 0.6)';
+            ctx.fillRect(width - padding - 150, padding + 35, 20, 15);
+            ctx.fillStyle = '#f1f1f1';
+            ctx.fillText('Binomial', width - padding - 125, padding + 47);
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.fillText('Score →', width - padding - 40, height - padding + 25);
+            ctx.save();
+            ctx.translate(15, padding + graphHeight / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Frequency', 0, 0);
+            ctx.restore();
+        }
+
+        function binomialPMF(n, k, p) {
+            return binomialCoeff(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+        }
+
+        function binomialCoeff(n, k) {
+            if (k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            
+            let result = 1;
+            for (let i = 1; i <= k; i++) {
+                result *= (n - i + 1) / i;
+            }
+            return result;
+        }
+
+        function runConvergenceTest() {
+            const n = parseInt(document.getElementById('nWeeks').value);
+            const p = parseFloat(document.getElementById('pBreach').value);
+            const attackers = parseInt(document.getElementById('numAttackers').value);
+            const q = Math.pow(1 - p, attackers);
+
+            const testSizes = [10, 50, 100, 500, 1000];
+            let resultsHTML = '<div class="stats-grid">';
+
+            testSizes.forEach(m => {
+                const finalScores = [];
+                
+                for (let i = 0; i < m; i++) {
+                    let score = 0;
+                    for (let week = 0; week < n; week++) {
+                        score += Math.random() < q ? 1 : -1;
+                    }
+                    finalScores.push(score);
+                }
+
+                const meanScore = finalScores.reduce((a, b) => a + b, 0) / m;
+                const expectedMean = n * (2 * q - 1);
+                const error = Math.abs(meanScore - expectedMean);
+
+                resultsHTML += `
+                    <div class="stat-card">
+                        <div class="stat-label">m = ${m}</div>
+                        <div class="stat-value" style="font-size: 1.2rem;">${meanScore.toFixed(2)}</div>
+                        <div style="color: #60a5fa; font-size: 0.9rem; margin-top: 0.5rem;">
+                            Error: ${error.toFixed(3)}
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsHTML += '</div>';
+            resultsHTML += `
+                <div class="info-box" style="margin-top: 1rem;">
+                    <strong>Expected mean score:</strong> ${(n * (2 * q - 1)).toFixed(2)}<br>
+                    <strong>Observation:</strong> As m increases, the empirical mean converges to the theoretical value.
+                </div>
+            `;
+
+            document.getElementById('convergenceResults').innerHTML = resultsHTML;
+            document.getElementById('convergenceInfo').style.display = 'block';
+            document.getElementById('convergenceText').textContent = 
+                `The simulation shows convergence to the binomial distribution. With probability q = ${q.toFixed(4)} ` +
+                `of staying secure each week, the expected score after ${n} weeks is ${(n * (2 * q - 1)).toFixed(2)}.`;
+        }
+
+        // Run initial simulation
+        window.addEventListener('load', () => {
+            setTimeout(runSimulation, 500);
+        });
+    </script>
+</body>
+</html>
