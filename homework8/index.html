@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 8 - Research Task</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        h4 {
+            color: #60a5fa;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.2rem;
+            margin-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        .content-box {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(20, 20, 30, 0.85);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        .proof-box {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .math-formula {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            color: #a5d6ff;
+            overflow-x: auto;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: rgba(220, 38, 38, 0.2);
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.2);
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .comparison-table {
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(15, 15, 25, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .comparison-table th {
+            text-align: center;
+        }
+
+        .comparison-table td {
+            text-align: left;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: bold;
+            color: #60a5fa;
+        }
+
+        code {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .highlight-box {
+            background: rgba(139, 92, 246, 0.2);
+            border-left: 4px solid #8b5cf6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .example-box {
+            background: rgba(34, 197, 94, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid #22c55e;
+        }
+
+        .pascal-visual {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: #a5d6ff;
+            line-height: 1.8;
+            margin: 1.5rem 0;
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .step-list {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            background: #3b82f6;
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="range"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            background: rgba(15, 15, 25, 0.8);
+        }
+
+        .interactive-demo {
+            background: rgba(30, 30, 40, 0.95);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid #3b82f6;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .value-display {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔬 Homework 8 - Research Task</h1>
+            <p class="subtitle">Analogies, Mathematical Properties & Combinatorial Relationships in Bernoulli Processes</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>🎯 Research Overview</h2>
+            
+            <p>
+                This research task explores the deep mathematical connections between Bernoulli processes, 
+                the Law of Large Numbers simulation (Homework 4), and the server security model (Homework 7). 
+                We analyze how these seemingly different applications share fundamental combinatorial structures, 
+                including binomial coefficients, Pascal's triangle, binomial expansions, and surprising connections 
+                to the Fibonacci sequence.
+            </p>
+
+            <h2>🧩 Analogies Between Bernoulli Process Simulations</h2>
+
+            <div class="proof-box">
+                <h3>Core Framework: The Bernoulli Process</h3>
+                
+                <p>
+                    Both the <strong>Law of Large Numbers (LLN) simulation</strong> and the 
+                    <strong>server security model</strong> are built upon the same probabilistic foundation: 
+                    the <strong>Bernoulli process</strong>.
+                </p>
+
+                <div class="info-box">
+                    <h4>Definition: Bernoulli Process</h4>
+                    <p>
+                        A Bernoulli process is a discrete-time stochastic process consisting of a sequence 
+                        of independent and identically distributed (i.i.d.) random variables X₁, X₂, ..., Xₙ, 
+                        where each Xᵢ can take one of two values:
+                    </p>
+                    <ul>
+                        <li><strong>Success</strong> (typically +1) with probability p</li>
+                        <li><strong>Failure</strong> (typically -1 or 0) with probability q = 1 - p</li>
+                    </ul>
+                </div>
+
+                <h4>🔄 Similarities: Shared Mathematical Structure</h4>
+
+                <ol class="step-list">
+                    <li><strong>Binary Outcomes:</strong> Both models involve sequences of independent binary events. 
+                    In LLN, each trial is a coin flip (heads/tails). In server security, each attack is either 
+                    successful (+1, server secure) or failed (-1, server breached).</li>
+
+                    <li><strong>Random Walk on ℤ:</strong> Each trajectory represents a discrete random walk on 
+                    the integer line. The cumulative score evolves as:
+                    <div class="math-formula">
+                        Sₙ = X₁ + X₂ + ... + Xₙ
+                    </div>
+                    where Sₙ is the position after n steps.</li>
+
+                    <li><strong>Convergence Properties:</strong> As n → ∞, the LLN demonstrates that the 
+                    sample mean converges to the expected value p. Similarly, in the security model, 
+                    the distribution of final scores converges to the binomial distribution.</li>
+
+                    <li><strong>Binomial Distribution:</strong> The number of successes K in n trials follows:
+                    <div class="math-formula">
+                        K ~ Binomial(n, p)<br>
+                        P(K = k) = C(n,k) · pᵏ · (1-p)ⁿ⁻ᵏ
+                    </div>
+                    This is the theoretical foundation for both simulations.</li>
+
+                    <li><strong>Histogram Convergence:</strong> As the number of trajectories (experiments) 
+                    increases, the empirical histogram of outcomes converges to the theoretical binomial 
+                    probability mass function.</li>
+                </ol>
+
+                <h4>🔀 Differences: Context and Interpretation</h4>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>LLN Simulation (HW4)</th>
+                            <th>Server Security Model (HW7)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Primary Focus</td>
+                            <td>Convergence of sample mean to expected value</td>
+                            <td>Distribution of cumulative security outcomes</td>
+                        </tr>
+                        <tr>
+                            <td>Outcome Encoding</td>
+                            <td>Typically {0, 1} or {-1, +1}</td>
+                            <td>Always {-1, +1} for symmetric walk</td>
+                        </tr>
+                        <tr>
+                            <td>Visualization</td>
+                            <td>Emphasizes mean convergence over time</td>
+                            <td>Emphasizes final score distribution</td>
+                        </tr>
+                        <tr>
+                            <td>Application Context</td>
+                            <td>General probability theory demonstration</td>
+                            <td>Cybersecurity risk assessment</td>
+                        </tr>
+                        <tr>
+                            <td>Key Metric</td>
+                            <td>Sample mean: X̄ₙ = (1/n)Σᵢ₌₁ⁿ Xᵢ</td>
+                            <td>Final score: Sₙ = Σᵢ₌₁ⁿ Xᵢ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ Unifying Principle</h4>
+                <p>
+                    Despite their different applications, both models illustrate how <strong>simple binary 
+                    processes</strong> can generate complex probabilistic behavior. The LLN focuses on 
+                    <strong>convergence properties</strong>, while the security model emphasizes 
+                    <strong>distributional characteristics</strong>—but both are manifestations of the 
+                    same underlying Bernoulli process.
+                </p>
+            </div>
+
+            <h2>📐 Mathematical Properties and Relationships</h2>
+
+            <h3>1️⃣ Binomial Coefficients</h3>
+
+            <div class="proof-box">
+                <h4>Definition and Fundamental Role</h4>
+                
+                <p>The binomial coefficient C(n, k), also written as (ⁿₖ) or "n choose k", is defined as:</p>
+                
+                <div class="math-formula">
+                    C(n, k) = n! / (k! · (n-k)!) = n·(n-1)·...·(n-k+1) / k!
+                </div>
+
+                <p><strong>Combinatorial Interpretation:</strong> C(n, k) counts the number of ways to 
+                choose k items from n items without regard to order.</p>
+
+                <h4>Role in Bernoulli Processes</h4>
+
+                <p>
+                    In a sequence of n Bernoulli trials with success probability p, the probability of 
+                    obtaining exactly k successes is:
+                </p>
+
+                <div class="math-formula">
+                    P(K = k) = C(n, k) · pᵏ · (1-p)ⁿ⁻ᵏ
+                </div>
+
+                <p><strong>Why?</strong> Because:</p>
+                <ul>
+                    <li>C(n, k) counts the number of sequences with exactly k successes</li>
+                    <li>pᵏ is the probability of k successes occurring</li>
+                    <li>(1-p)ⁿ⁻ᵏ is the probability of (n-k) failures occurring</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>🔢 Example: 5 Coin Flips (p = 0.5)</h4>
+                    <p>Probability of getting exactly 3 heads in 5 flips:</p>
+                    <div class="math-formula">
+                        P(K = 3) = C(5, 3) · (0.5)³ · (0.5)²<br>
+                        = 10 · 0.125 · 0.25<br>
+                        = 0.3125 = 31.25%
+                    </div>
+                    <p>The coefficient C(5,3) = 10 represents the 10 different sequences with 3 heads:</p>
+                    <p style="font-family: monospace; color: #22c55e;">
+                        HHHTT, HHTHT, HTHHT, THHHT, HHTTH, HTHTH, THHTH, HTTTH, THTHH, TTHHH
+                    </p>
+                </div>
+
+                <h4>Connection to Server Security Model</h4>
+
+                <p>
+                    In the security simulation, if we have n attacks and end with a final score of y, 
+                    we can calculate the number of successes as:
+                </p>
+
+                <div class="math-formula">
+                    k = (n + y) / 2
+                </div>
+
+                <p>
+                    This is because if there are k successes (+1) and (n-k) failures (-1), then:
+                    S = k·(+1) + (n-k)·(-1) = k - (n-k) = 2k - n, so k = (n+S)/2.
+                </p>
+
+                <p>
+                    The probability of achieving final score y is therefore:
+                </p>
+
+                <div class="math-formula">
+                    P(Y = y) = C(n, k) · pᵏ · (1-p)ⁿ⁻ᵏ, where k = (n + y) / 2
+                </div>
+            </div>
+
+            <h3>2️⃣ Pascal's Triangle (Tartaglia's Triangle)</h3>
+
+            <div class="proof-box">
+                <h4>Structure and Construction</h4>
+
+                <p>
+                    Pascal's triangle (known in Italy as <strong>Tartaglia's Triangle</strong>, after the 
+                    mathematician Niccolò Fontana Tartaglia) is a triangular array where each number is 
+                    the sum of the two numbers directly above it.
+                </p>
+
+                <div class="pascal-visual">
+                    <div style="font-size: 1.2rem; margin-bottom: 1rem;">Pascal's Triangle (First 8 Rows)</div>
+                    <div>                    1</div>
+                    <div>                  1   1</div>
+                    <div>                1   2   1</div>
+                    <div>              1   3   3   1</div>
+                    <div>            1   4   6   4   1</div>
+                    <div>          1   5  10  10   5   1</div>
+                    <div>        1   6  15  20  15   6   1</div>
+                    <div>      1   7  21  35  35  21   7   1</div>
+                </div>
+
+                <h4>Fundamental Property: Pascal's Rule</h4>
+
+                <div class="math-formula">
+                    C(n, k) = C(n-1, k-1) + C(n-1, k)
+                </div>
+
+                <p>
+                    This recurrence relation reflects a simple combinatorial truth: to choose k items from n items, 
+                    we can either include a particular item (then choose k-1 from the remaining n-1) or exclude it 
+                    (then choose k from the remaining n-1).
+                </p>
+
+                <h4>Connection to Bernoulli Processes</h4>
+
+                <p>
+                    Row n of Pascal's triangle contains all binomial coefficients C(n, k) for k = 0, 1, ..., n. 
+                    These coefficients correspond exactly to the <strong>number of paths</strong> in a Bernoulli 
+                    process that lead to k successes in n trials.
+                </p>
+
+                <div class="info-box">
+                    <h4>🎯 Interpretation in Security Model</h4>
+                    <p>
+                        If we simulate n = 6 attacks, the 6th row of Pascal's triangle (1, 6, 15, 20, 15, 6, 1) 
+                        tells us:
+                    </p>
+                    <ul>
+                        <li>1 way to have 0 successes (all failures): score = -6</li>
+                        <li>6 ways to have 1 success: score = -4</li>
+                        <li>15 ways to have 2 successes: score = -2</li>
+                        <li>20 ways to have 3 successes: score = 0</li>
+                        <li>15 ways to have 4 successes: score = +2</li>
+                        <li>6 ways to have 5 successes: score = +4</li>
+                        <li>1 way to have 6 successes (all successes): score = +6</li>
+                    </ul>
+                    <p>
+                        The histogram shape mirrors Pascal's triangle when p = 0.5 (symmetric distribution).
+                    </p>
+                </div>
+
+                <h4>Symmetry Property</h4>
+
+                <div class="math-formula">
+                    C(n, k) = C(n, n-k)
+                </div>
+
+                <p>
+                    This symmetry reflects the fact that choosing k items to include is equivalent to choosing 
+                    n-k items to exclude. In the binomial distribution with p = 0.5, this creates a symmetric 
+                    bell-shaped curve centered at the mean.
+                </p>
+            </div>
+
+            <h3>3️⃣ Binomial Expansion</h3>
+
+            <div class="proof-box">
+                <h4>The Binomial Theorem</h4>
+
+                <p>The binomial theorem states that for any real numbers a and b, and non-negative integer n:</p>
+
+                <div class="math-formula">
+                    (a + b)ⁿ = Σₖ₌₀ⁿ C(n, k) · aᵏ · bⁿ⁻ᵏ
+                </div>
+
+                <p>This expansion directly relates to the binomial probability distribution. Setting a = p and b = 1-p:</p>
+
+                <div class="math-formula">
+                    (p + (1-p))ⁿ = Σₖ₌₀ⁿ C(n, k) · pᵏ · (1-p)ⁿ⁻ᵏ = 1
+                </div>
+
+                <p>
+                    This confirms that the sum of all binomial probabilities equals 1, as required for a probability 
+                    distribution. Each term C(n, k) · pᵏ · (1-p)ⁿ⁻ᵏ represents the probability of exactly k successes.
+                </p>
+
+                <h4>Special Cases and Properties</h4>
+
+                <div class="example-box">
+                    <h4>Case 1: a = b = 1</h4>
+                    <div class="math-formula">
+                        (1 + 1)ⁿ = 2ⁿ = Σₖ₌₀ⁿ C(n, k)
+                    </div>
+                    <p>
+                        This shows that the sum of all binomial coefficients in row n equals 2ⁿ, which represents 
+                        the total number of possible outcomes in n Bernoulli trials.
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Case 2: a = 1, b = -1</h4>
+                    <div class="math-formula">
+                        (1 - 1)ⁿ = 0 = Σₖ₌₀ⁿ (-1)ᵏ · C(n, k)
+                    </div>
+                    <p>
+                        This demonstrates that the alternating sum of binomial coefficients equals 0 (for n > 0), 
+                        showing that there are equal numbers of subsets of even and odd cardinality.
+                    </p>
+                </div>
+
+                <h4>Connection to Moment Generating Functions</h4>
+
+                <p>
+                    The binomial expansion is crucial in deriving moments of the binomial distribution. 
+                    The expected value and variance can be computed using:
+                </p>
+
+                <div class="math-formula">
+                    E[K] = n · p<br>
+                    Var(K) = n · p · (1-p)
+                </div>
+
+                <p>
+                    These formulas emerge from differentiating the binomial expansion with respect to p.
+                </p>
+            </div>
+
+            <h3>4️⃣ Fibonacci Sequence Connection</h3>
+
+            <div class="proof-box">
+                <h4>The Fibonacci Sequence</h4>
+
+                <p>The Fibonacci sequence is defined by the recurrence relation:</p>
+
+                <div class="math-formula">
+                    F₀ = 0, F₁ = 1<br>
+                    Fₙ = Fₙ₋₁ + Fₙ₋₂ for n ≥ 2
+                </div>
+
+                <p>Sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...</p>
+
+                <h4>Hidden in Pascal's Triangle: Diagonal Sums</h4>
+
+                <p>
+                    A remarkable property connects Pascal's triangle to the Fibonacci sequence: 
+                    the sum of entries along the "shallow diagonals" yields Fibonacci numbers.
+                </p>
+
+                <div class="pascal-visual">
+                    <div style="font-size: 1.1rem; margin-bottom: 1rem;">Fibonacci in Pascal's Triangle</div>
+                    <div>                    <span style="color: #22c55e;">1</span></div>
+                    <div>                  <span style="color: #3b82f6;">1</span>   1</div>
+                    <div>                <span style="color: #8b5cf6;">1</span>   2   1</div>
+                    <div>              <span style="color: #ef4444;">1</span>   3   3   1</div>
+                    <div>            1   <span style="color: #ef4444;">4</span>   6   4   1</div>
+                    <div>          1   5  <span style="color: #ef4444;">10</span>  10   5   1</div>
+                    <div>        1   6  15  <span style="color: #ef4444;">20</span>  15   6   1</div>
+                    <div style="margin-top: 1rem; color: #60a5fa;">
+                        F₁ = <span style="color: #22c55e;">1</span> = 1<br>
+                        F₂ = <span style="color: #3b82f6;">1</span> = 1<br>
+                        F₃ = <span style="color: #8b5cf6;">1</span> + <span style="color: #3b82f6;">1</span> = 2<br>
+                        F₄ = <span style="color: #ef4444;">1</span> + <span style="color: #8b5cf6;">2</span> = 3<br>
+                        F₅ = <span style="color: #ef4444;">1</span> + <span style="color: #ef4444;">3</span> + <span style="color: #8b5cf6;">1</span> = 5<br>
+                        F₆ = <span style="color: #ef4444;">1</span> + <span style="color: #ef4444;">4</span> + <span style="color: #ef4444;">3</span> = 8
+                    </div>
+                </div>
+
+                <h4>Mathematical Formula</h4>
+
+                <p>The relationship can be expressed as:</p>
+
+                <div class="math-formula">
+                    Fₙ₊₁ = Σₖ₌₀⌊ⁿ/²⌋ C(n-k, k)
+                </div>
+
+                <p>
+                    This means the (n+1)th Fibonacci number equals the sum of binomial coefficients 
+                    along the nth shallow diagonal of Pascal's triangle.
+                </p>
+
+                <h4>Connection to Bernoulli Processes</h4>
+
+                <p>
+                    In the context of random walks, this connection reveals that the Fibonacci sequence 
+                    counts the number of ways to reach certain positions in restricted random walks where 
+                    consecutive steps in the same direction are limited.
+                </p>
+
+                <div class="highlight-box">
+                    <h4>🎲 Combinatorial Interpretation</h4>
+                    <p>
+                        The nth Fibonacci number counts the number of ways to tile a 1×(n-1) board with 
+                        1×1 and 1×2 tiles. This is analogous to sequences of Bernoulli outcomes with 
+                        constraints on consecutive results.
+                    </p>
+                </div>
+            </div>
+
+            <h3>5️⃣ Combinatorial Coefficients and Their Properties</h3>
+
+            <div class="proof-box">
+                <h4>Fundamental Combinatorial Identities</h4>
+
+                <div class="example-box">
+                    <h4>Identity 1: Symmetry</h4>
+                    <div class="math-formula">
+                        C(n, k) = C(n, n-k)
+                    </div>
+                    <p>
+                        This identity is crucial for understanding the symmetry in binomial distributions 
+                        when p = 0.5. In the security model, it means the probability of achieving score +y 
+                        equals the probability of achieving score -y when attacks succeed with probability 0.5.
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Identity 2: Pascal's Rule (Recurrence)</h4>
+                    <div class="math-formula">
+                        C(n, k) = C(n-1, k-1) + C(n-1, k)
+                    </div>
+                    <p>
+                        This rule shows how probabilities evolve as we add more trials. In a Bernoulli process, 
+                        the number of ways to achieve k successes in n trials equals the sum of ways where 
+                        the nth trial is a success (requiring k-1 successes in n-1 trials) and ways where 
+                        it's a failure (requiring k successes in n-1 trials).
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Identity 3: Sum of Row</h4>
+                    <div class="math-formula">
+                        Σₖ₌₀ⁿ C(n, k) = 2ⁿ
+                    </div>
+                    <p>
+                        The total number of possible outcomes in n Bernoulli trials is 2ⁿ, since each trial 
+                        has 2 possible outcomes. This is the total number of unique sequences of length n 
+                        with binary outcomes.
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Identity 4: Vandermonde's Identity</h4>
+                    <div class="math-formula">
+                        C(m+n, r) = Σₖ₌₀ʳ C(m, k) · C(n, r-k)
+                    </div>
+                    <p>
+                        This identity relates to combining independent Bernoulli processes. If we run two 
+                        independent experiments with m and n trials respectively, Vandermonde's identity 
+                        helps calculate probabilities in the combined system.
+                    </p>
+                </div>
+
+                <h4>Application to Expected Values</h4>
+
+                <p>
+                    Using combinatorial coefficients, we can derive the expected number of successes 
+                    in n Bernoulli trials:
+                </p>
+
+                <div class="math-formula">
+                    E[K] = Σₖ₌₀ⁿ k · C(n, k) · pᵏ · (1-p)ⁿ⁻ᵏ = n · p
+                </div>
+
+                <p>
+                    This elegant result shows that the expected number of successes is simply the 
+                    product of the number of trials and the success probability. In the security model 
+                    with p = 0.5, we expect half of the attacks to be defended successfully.
+                </p>
+            </div>
+
+            <h2>🎨 Interactive Demonstrations</h2>
+
+            <div class="interactive-demo">
+                <h3>Pascal's Triangle Generator</h3>
+                <p>Explore the relationship between Pascal's triangle, binomial coefficients, and Fibonacci numbers.</p>
+                
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label>Number of Rows: <span class="value-display" id="rowsValue">8</span></label>
+                        <input type="range" id="rowsSlider" min="3" max="15" value="8">
+                    </div>
+                    <div class="form-group">
+                        <label>Highlight Pattern:</label>
+                        <select id="highlightPattern" style="width: 100%; padding: 0.8rem; border: 2px solid #3b82f6; border-radius: 4px; background: rgba(15, 15, 25, 0.8); color: #f1f1f1; font-size: 1rem;">
+                            <option value="none">None</option>
+                            <option value="even">Even Numbers</option>
+                            <option value="odd">Odd Numbers</option>
+                            <option value="fibonacci">Fibonacci Diagonals</option>
+                            <option value="powers2">Powers of 2</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button onclick="generatePascal()">Generate Triangle</button>
+                <button onclick="showFibonacci()">Show Fibonacci Sequence</button>
+                
+                <canvas id="pascalCanvas" width="800" height="600"></canvas>
+                
+                <div id="fibonacciOutput" class="info-box" style="display: none; margin-top: 1rem;">
+                    <h4>Fibonacci Numbers from Diagonals:</h4>
+                    <p id="fibonacciList"></p>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Binomial Distribution Simulator</h3>
+                <p>Visualize how binomial coefficients determine probability distributions in Bernoulli processes.</p>
+                
+                <div class="controls-grid">
+                    <div class="form-group">
+                        <label>Number of Trials (n): <span class="value-display" id="trialsValue">10</span></label>
+                        <input type="range" id="trialsSlider" min="5" max="50" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Success Probability (p): <span class="value-display" id="probValue">0.50</span></label>
+                        <input type="range" id="probSlider" min="0" max="100" value="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Experiments: <span class="value-display" id="experimentsValue">1000</span></label>
+                        <input type="range" id="experimentsSlider" min="100" max="10000" value="1000" step="100">
+                    </div>
+                </div>
+                
+                <button onclick="runBinomialSimulation()">Run Simulation</button>
+                <button onclick="showTheoreticalDistribution()">Show Theoretical Distribution</button>
+                <button onclick="compareDistributions()">Compare Both</button>
+                
+                <canvas id="binomialCanvas" width="800" height="500"></canvas>
+                
+                <div id="statsOutput" class="success-box" style="margin-top: 1rem;">
+                    <h4>📊 Statistics:</h4>
+                    <div id="statsContent">
+                        <p><strong>Expected Value (μ):</strong> <span id="expectedValue">-</span></p>
+                        <p><strong>Variance (σ²):</strong> <span id="variance">-</span></p>
+                        <p><strong>Standard Deviation (σ):</strong> <span id="stdDev">-</span></p>
+                        <p><strong>Empirical Mean:</strong> <span id="empiricalMean">-</span></p>
+                        <p><strong>Empirical Std Dev:</strong> <span id="empiricalStd">-</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🔗 Synthesis: Unifying Mathematical Concepts</h2>
+
+            <div class="proof-box">
+                <h3>The Web of Connections</h3>
+
+                <p>
+                    The mathematical structures we've explored—binomial coefficients, Pascal's triangle, 
+                    binomial expansions, Fibonacci numbers, and combinatorial identities—are not isolated 
+                    concepts but form an interconnected web of mathematical beauty.
+                </p>
+
+                <div class="highlight-box">
+                    <h4>🌟 Key Insights</h4>
+                    <ul>
+                        <li><strong>Binomial Coefficients</strong> are the fundamental building blocks that 
+                        count the number of ways events can occur in Bernoulli processes.</li>
+                        
+                        <li><strong>Pascal's Triangle</strong> organizes these coefficients in a structure 
+                        that reveals recursive relationships and symmetries inherent in probability distributions.</li>
+                        
+                        <li><strong>Binomial Expansion</strong> provides the algebraic framework that connects 
+                        these coefficients to probability theory, ensuring that all probabilities sum to 1.</li>
+                        
+                        <li><strong>Fibonacci Numbers</strong> emerge unexpectedly from diagonal sums in 
+                        Pascal's triangle, linking combinatorics to recursive sequences and constrained 
+                        counting problems.</li>
+                        
+                        <li><strong>Combinatorial Identities</strong> provide powerful tools for simplifying 
+                        complex probability calculations and revealing deep structural properties of 
+                        random processes.</li>
+                    </ul>
+                </div>
+
+                <h4>Application to Homework 4 and Homework 7</h4>
+
+                <p>
+                    Both the Law of Large Numbers simulation and the server security model demonstrate 
+                    these principles in action:
+                </p>
+
+                <ul>
+                    <li>The <strong>convergence of histograms</strong> to theoretical distributions 
+                    reflects the law of large numbers and the central limit theorem.</li>
+                    
+                    <li>The <strong>bell-shaped curves</strong> we observe are manifestations of binomial 
+                    distributions determined by binomial coefficients.</li>
+                    
+                    <li>The <strong>symmetry</strong> when p = 0.5 directly reflects the symmetry property 
+                    C(n,k) = C(n,n-k) of binomial coefficients.</li>
+                    
+                    <li>The <strong>spread</strong> of the distribution is determined by the variance 
+                    formula n·p·(1-p), derived from binomial expansion properties.</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>✨ Conclusion</h4>
+                <p>
+                    Through this research, we've discovered that seemingly simple Bernoulli processes 
+                    embody a rich tapestry of mathematical structures. From the elementary concept of 
+                    binary trials emerges Pascal's triangle, from which flows the Fibonacci sequence, 
+                    and through which we understand the fundamental nature of randomness and probability.
+                </p>
+                <p>
+                    The elegance of these connections reminds us that mathematics is not a collection 
+                    of isolated facts, but a unified language that describes patterns across diverse 
+                    phenomena—from coin flips to cybersecurity, from triangular arrays to recursive 
+                    sequences, from algebraic expansions to probabilistic convergence.
+                </p>
+            </div>
+
+            <h2>📚 References and Further Reading</h2>
+
+            <div class="info-box">
+                <h4>Recommended Resources:</h4>
+                <ul>
+                    <li><strong>Pascal's Triangle:</strong> Historical perspectives on Tartaglia and Pascal's contributions to combinatorics</li>
+                    <li><strong>Fibonacci Numbers:</strong> Connections to nature, art, and recursive sequences</li>
+                    <li><strong>Binomial Distribution:</strong> Applications in statistics, quality control, and risk assessment</li>
+                    <li><strong>Law of Large Numbers:</strong> Theoretical foundations and practical implications</li>
+                    <li><strong>Combinatorics:</strong> Counting principles and their applications to probability theory</li>
+                </ul>
+            </div>
+
+            <div class="back-home-box">
+                <a href="../index.html" class="back-home-link">← Back to Homepage</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Statistics Homework Project | Mathematical Research & Analysis</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Exploring the Beautiful Connections in Probability Theory</p>
+        </div>
+    </footer>
+
+    <script>
+        // Utility Functions
+        function binomialCoefficient(n, k) {
+            if (k < 0 || k > n) return 0;
+            if (k === 0 || k === n) return 1;
+            
+            k = Math.min(k, n - k);
+            let result = 1;
+            for (let i = 0; i < k; i++) {
+                result *= (n - i);
+                result /= (i + 1);
+            }
+            return Math.round(result);
+        }
+
+        function factorial(n) {
+            if (n <= 1) return 1;
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            return result;
+        }
+
+        // Update slider values
+        document.getElementById('rowsSlider').addEventListener('input', function() {
+            document.getElementById('rowsValue').textContent = this.value;
+        });
+
+        document.getElementById('trialsSlider').addEventListener('input', function() {
+            document.getElementById('trialsValue').textContent = this.value;
+        });
+
+        document.getElementById('probSlider').addEventListener('input', function() {
+            const prob = (this.value / 100).toFixed(2);
+            document.getElementById('probValue').textContent = prob;
+        });
+
+        document.getElementById('experimentsSlider').addEventListener('input', function() {
+            document.getElementById('experimentsValue').textContent = this.value;
+        });
+
+        // Pascal's Triangle Generator
+        function generatePascal() {
+            const rows = parseInt(document.getElementById('rowsSlider').value);
+            const pattern = document.getElementById('highlightPattern').value;
+            const canvas = document.getElementById('pascalCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const triangle = [];
+            for (let i = 0; i < rows; i++) {
+                triangle[i] = [];
+                for (let j = 0; j <= i; j++) {
+                    triangle[i][j] = binomialCoefficient(i, j);
+                }
+            }
+            
+            const cellSize = Math.min(50, 600 / rows);
+            const startX = canvas.width / 2;
+            const startY = 50;
+            
+            ctx.font = `${Math.min(14, cellSize / 3)}px monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j <= i; j++) {
+                    const x = startX + (j - i / 2) * cellSize;
+                    const y = startY + i * cellSize;
+                    const value = triangle[i][j];
+                    
+                    // Determine color based on pattern
+                    let color = '#3b82f6';
+                    if (pattern === 'even' && value % 2 === 0) color = '#22c55e';
+                    if (pattern === 'odd' && value % 2 === 1) color = '#ef4444';
+                    if (pattern === 'powers2' && (value & (value - 1)) === 0) color = '#8b5cf6';
+                    
+                    // Draw circle
+                    ctx.fillStyle = 'rgba(59, 130, 246, 0.2)';
+                    ctx.beginPath();
+                    ctx.arc(x, y, cellSize / 2.5, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    // Draw value
+                    ctx.fillStyle = color;
+                    ctx.fillText(value.toString(), x, y);
+                }
+            }
+        }
+
+        function showFibonacci() {
+            const rows = parseInt(document.getElementById('rowsSlider').value);
+            const fibonacci = [1, 1];
+            
+            // Calculate Fibonacci from Pascal's triangle diagonals
+            for (let n = 2; n < rows; n++) {
+                let sum = 0;
+                for (let k = 0; k <= Math.floor(n / 2); k++) {
+                    sum += binomialCoefficient(n - k, k);
+                }
+                fibonacci.push(sum);
+            }
+            
+            const output = document.getElementById('fibonacciOutput');
+            const list = document.getElementById('fibonacciList');
+            
+            list.innerHTML = `<strong>F₁ to F${fibonacci.length}:</strong> ${fibonacci.join(', ')}`;
+            output.style.display = 'block';
+            
+            // Highlight Fibonacci diagonals on canvas
+            document.getElementById('highlightPattern').value = 'fibonacci';
+            generatePascal();
+        }
+
+        // Binomial Distribution Simulator
+        function runBinomialSimulation() {
+            const n = parseInt(document.getElementById('trialsSlider').value);
+            const p = parseFloat(document.getElementById('probSlider').value) / 100;
+            const experiments = parseInt(document.getElementById('experimentsSlider').value);
+            
+            // Run simulation
+            const results = new Array(n + 1).fill(0);
+            let sumSuccesses = 0;
+            
+            for (let exp = 0; exp < experiments; exp++) {
+                let successes = 0;
+                for (let trial = 0; trial < n; trial++) {
+                    if (Math.random() < p) successes++;
+                }
+                results[successes]++;
+                sumSuccesses += successes;
+            }
+            
+            // Calculate statistics
+            const expectedValue = n * p;
+            const variance = n * p * (1 - p);
+            const stdDev = Math.sqrt(variance);
+            const empiricalMean = sumSuccesses / experiments;
+            
+            let sumSquaredDiff = 0;
+            for (let k = 0; k <= n; k++) {
+                const count = results[k];
+                for (let i = 0; i < count; i++) {
+                    sumSquaredDiff += Math.pow(k - empiricalMean, 2);
+                }
+            }
+            const empiricalStd = Math.sqrt(sumSquaredDiff / experiments);
+            
+            // Update statistics display
+            document.getElementById('expectedValue').textContent = expectedValue.toFixed(3);
+            document.getElementById('variance').textContent = variance.toFixed(3);
+            document.getElementById('stdDev').textContent = stdDev.toFixed(3);
+            document.getElementById('empiricalMean').textContent = empiricalMean.toFixed(3);
+            document.getElementById('empiricalStd').textContent = empiricalStd.toFixed(3);
+            
+            // Draw histogram
+            drawHistogram(results, experiments, n, p, 'empirical');
+        }
+
+        function showTheoreticalDistribution() {
+            const n = parseInt(document.getElementById('trialsSlider').value);
+            const p = parseFloat(document.getElementById('probSlider').value) / 100;
+            
+            const theoretical = [];
+            for (let k = 0; k <= n; k++) {
+                const prob = binomialCoefficient(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+                theoretical.push(prob);
+            }
+            
+            drawHistogram(theoretical, 1, n, p, 'theoretical');
+        }
+
+        function compareDistributions() {
+            const n = parseInt(document.getElementById('trialsSlider').value);
+            const p = parseFloat(document.getElementById('probSlider').value) / 100;
+            const experiments = parseInt(document.getElementById('experimentsSlider').value);
+            
+            // Run simulation
+            const empirical = new Array(n + 1).fill(0);
+            for (let exp = 0; exp < experiments; exp++) {
+                let successes = 0;
+                for (let trial = 0; trial < n; trial++) {
+                    if (Math.random() < p) successes++;
+                }
+                empirical[successes]++;
+            }
+            
+            // Calculate theoretical
+            const theoretical = [];
+            for (let k = 0; k <= n; k++) {
+                const prob = binomialCoefficient(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+                theoretical.push(prob * experiments);
+            }
+            
+            drawComparisonHistogram(empirical, theoretical, n, p);
+        }
+
+        function drawHistogram(data, total, n, p, type) {
+            const canvas = document.getElementById('binomialCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const padding = 60;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+            
+            const barWidth = chartWidth / (n + 1);
+            const maxValue = Math.max(...data);
+            const maxHeight = type === 'theoretical' ? maxValue : maxValue / total;
+            
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, padding + chartHeight);
+            ctx.lineTo(padding + chartWidth, padding + chartHeight);
+            ctx.stroke();
+            
+            // Draw bars
+            for (let k = 0; k <= n; k++) {
+                const value = type === 'theoretical' ? data[k] : data[k] / total;
+                const barHeight = (value / maxHeight) * chartHeight;
+                const x = padding + k * barWidth;
+                const y = padding + chartHeight - barHeight;
+                
+                ctx.fillStyle = type === 'theoretical' ? 'rgba(139, 92, 246, 0.7)' : 'rgba(59, 130, 246, 0.7)';
+                ctx.fillRect(x + 2, y, barWidth - 4, barHeight);
+                
+                // Draw labels for every few bars
+                if (k % Math.ceil(n / 10) === 0 || k === n) {
+                    ctx.fillStyle = '#f1f1f1';
+                    ctx.font = '12px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(k.toString(), x + barWidth / 2, padding + chartHeight + 20);
+                }
+            }
+            
+            // Draw title
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            const title = type === 'theoretical' ? 
+                `Theoretical Binomial Distribution (n=${n}, p=${p.toFixed(2)})` :
+                `Empirical Distribution (n=${n}, p=${p.toFixed(2)})`;
+            ctx.fillText(title, canvas.width / 2, 30);
+            
+            // Draw axis labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px sans-serif';
+            ctx.fillText('Number of Successes', canvas.width / 2, canvas.height - 10);
+            
+            ctx.save();
+            ctx.translate(20, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Probability', 0, 0);
+            ctx.restore();
+        }
+
+        function drawComparisonHistogram(empirical, theoretical, n, p) {
+            const canvas = document.getElementById('binomialCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const padding = 60;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+            
+            const barWidth = chartWidth / (n + 1) / 2;
+            const maxValue = Math.max(...empirical, ...theoretical);
+            
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, padding + chartHeight);
+            ctx.lineTo(padding + chartWidth, padding + chartHeight);
+            ctx.stroke();
+            
+            // Draw bars
+            for (let k = 0; k <= n; k++) {
+                const empValue = empirical[k];
+                const theoValue = theoretical[k];
+                
+                const empHeight = (empValue / maxValue) * chartHeight;
+                const theoHeight = (theoValue / maxValue) * chartHeight;
+                
+                const x = padding + k * barWidth * 2;
+                
+                // Empirical bar
+                ctx.fillStyle = 'rgba(59, 130, 246, 0.7)';
+                ctx.fillRect(x + 2, padding + chartHeight - empHeight, barWidth - 2, empHeight);
+                
+                // Theoretical bar
+                ctx.fillStyle = 'rgba(139, 92, 246, 0.7)';
+                ctx.fillRect(x + barWidth, padding + chartHeight - theoHeight, barWidth - 2, theoHeight);
+                
+                // Labels
+                if (k % Math.ceil(n / 10) === 0 || k === n) {
+                    ctx.fillStyle = '#f1f1f1';
+                    ctx.font = '12px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(k.toString(), x + barWidth, padding + chartHeight + 20);
+                }
+            }
+            
+            // Draw title
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Empirical vs Theoretical Distribution (n=${n}, p=${p.toFixed(2)})`, canvas.width / 2, 30);
+            
+            // Draw legend
+            ctx.fillStyle = 'rgba(59, 130, 246, 0.7)';
+            ctx.fillRect(canvas.width - 200, 50, 20, 20);
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('Empirical', canvas.width - 175, 65);
+            
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.7)';
+            ctx.fillRect(canvas.width - 200, 80, 20, 20);
+            ctx.fillStyle = '#f1f1f1';
+            ctx.fillText('Theoretical', canvas.width - 175, 95);
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            generatePascal();
+            showTheoreticalDistribution();
+        });
+    </script>
+</body>
+</html>
