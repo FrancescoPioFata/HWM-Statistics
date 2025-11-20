@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 9 - Probability Theory</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                        url('https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=3000') no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(25, 25, 35, 0.9);
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            border-radius: 8px;
+        }
+        
+        h1 {
+            color: #3b82f6;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 3px solid #1e3a8a;
+            padding-bottom: 15px;
+        }
+        
+        h2 {
+            color: #1e3a8a;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 5px solid #3b82f6;
+        }
+        
+        h3 {
+            color: #3b82f6;
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        p {
+            text-align: justify;
+            margin-bottom: 20px;
+            color: #f1f1f1;
+        }
+        
+        .intro {
+            font-size: 1.1em;
+            color: #f1f1f1;
+            font-style: italic;
+            background: rgba(59, 130, 246, 0.2);
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 30px;
+        }
+        
+        .theorem-box {
+            background: rgba(30, 58, 138, 0.3);
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .theorem-box h4 {
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .proof-box {
+            background: rgba(245, 158, 11, 0.2);
+            border: 2px solid #f59e0b;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .proof-box h4 {
+            color: #f59e0b;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+        
+        ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            color: #f1f1f1;
+        }
+        
+        .interpretation-card {
+            background: rgba(30, 30, 40, 0.9);
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .interpretation-card:hover {
+            border-color: #60a5fa;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .interpretation-card h4 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .highlight {
+            background: rgba(59, 130, 246, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #60a5fa;
+        }
+        
+        strong {
+            color: #1e3a8a;
+        }
+        
+        .mjx-chtml {
+            font-size: 1.1em !important;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Homework 9</h1>
+        <h1 style="font-size: 1.5em; border: none; padding: 0; margin-top: 10px;">Probability Theory and Measure Theory</h1>
+        
+        <div class="intro">
+            Probability has been interpreted in different ways throughout mathematical history. The modern axiomatic approach, proposed by Kolmogorov in 1933, provides a rigorous and unified foundation that resolves conceptual inconsistencies among different interpretations. This treatment explores the main interpretations of probability, their relationship with measure theory, and derives fundamental properties from Kolmogorov's axioms.
+        </div>
+
+        <h2>1. Interpretations of Probability</h2>
+        
+        <p>Throughout the centuries, several interpretations of the concept of probability have emerged, each attempting to answer the fundamental question: <em>what does it mean that an event has a certain probability?</em></p>
+
+        <div class="interpretation-card">
+            <h4>🎲 Classical Interpretation (Laplace)</h4>
+            <p>The classical interpretation defines probability as the ratio between favorable cases and possible cases, assuming that all outcomes are equally probable:</p>
+            <p style="text-align: center;">$$P(A) = \frac{\text{number of favorable cases}}{\text{number of possible cases}}$$</p>
+            <p><strong>Advantages:</strong> Intuitive and easily applicable to symmetric situations (dice, coins, cards).</p>
+            <p><strong>Limitations:</strong> The definition is <span class="highlight">circular</span> since "equally probable" implicitly means "with the same probability." Moreover, it is difficult to extend to infinite or continuous spaces.</p>
+        </div>
+
+        <div class="interpretation-card">
+            <h4>📊 Frequentist Interpretation</h4>
+            <p>The frequentist interpretation defines probability as the limit of relative frequency in an infinite number of repeated trials under identical conditions:</p>
+            <p style="text-align: center;">$$P(A) = \lim_{n \to \infty} \frac{n_A}{n}$$</p>
+            <p>where \(n_A\) is the number of times event \(A\) occurs in \(n\) trials.</p>
+            <p><strong>Advantages:</strong> Strong connection with statistical practice and empirical data.</p>
+            <p><strong>Limitations:</strong> Requires an infinite number of trials, which is conceptually problematic. Difficult to apply to single non-repeatable events (e.g., "the probability that this specific patient will recover").</p>
+        </div>
+
+        <div class="interpretation-card">
+            <h4>🧠 Bayesian Interpretation (Subjective)</h4>
+            <p>The Bayesian interpretation considers probability as a measure of the <span class="highlight">degree of rational belief</span> in an event, given available information. Beliefs are updated using Bayes' theorem:</p>
+            <p style="text-align: center;">$$P(H \mid D) = \frac{P(D \mid H) \cdot P(H)}{P(D)}$$</p>
+            <p><strong>Advantages:</strong> Applicable to single events. Provides a formal framework for statistical inference.</p>
+            <p><strong>Limitations:</strong> The choice of prior probabilities is subjective. Different agents may assign different probabilities to the same event.</p>
+        </div>
+
+        <div class="interpretation-card">
+            <h4>📐 Geometric Interpretation</h4>
+            <p>The geometric interpretation generalizes the classical interpretation to continuous spaces, defining probability as the ratio between geometric measures:</p>
+            <p style="text-align: center;">$$P(A) = \frac{\mu(A)}{\mu(S)}$$</p>
+            <p>where \(\mu\) represents a measure (length, area, volume) and \(S\) is the total sample space.</p>
+            <p><strong>Advantages:</strong> Naturally extends the idea of equal probability to continuous spaces.</p>
+            <p><strong>Limitations:</strong> Depends on the choice of underlying measure. Can lead to paradoxes if symmetry assumptions are naive (e.g., Bertrand's paradox).</p>
+        </div>
+
+        <h2>2. The Axiomatic Approach and Resolution of Inconsistencies</h2>
+
+        <p><strong>Kolmogorov's (1933)</strong> axiomatic approach resolves conceptual inconsistencies between different interpretations by defining probability through a minimal set of axioms, without referring to specific interpretations.</p>
+
+        <h3>2.1. Kolmogorov's Axioms</h3>
+
+        <div class="theorem-box">
+            <h4>Definition: Probability Space</h4>
+            <p>A probability space is a triple \((\Omega, \mathcal{F}, P)\) where:</p>
+            <ul>
+                <li>\(\Omega\) is the <strong>sample space</strong> (set of all possible outcomes)</li>
+                <li>\(\mathcal{F}\) is a <strong>\(\sigma\)-algebra</strong> of events on \(\Omega\)</li>
+                <li>\(P : \mathcal{F} \to [0,1]\) is a <strong>probability measure</strong> that satisfies:</li>
+            </ul>
+            <p><strong>Axiom 1</strong> (Non-negativity): $$P(A) \ge 0 \quad \forall A \in \mathcal{F}$$</p>
+            <p><strong>Axiom 2</strong> (Normalization): $$P(\Omega) = 1$$</p>
+            <p><strong>Axiom 3</strong> (Countable additivity): For every sequence \((A_i)_{i \ge 1}\) of pairwise disjoint events,
+            $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$</p>
+        </div>
+
+        <h3>2.2. How the Axioms Reconcile Different Interpretations</h3>
+
+        <p>Kolmogorov's axioms are <span class="highlight">neutral with respect to interpretation</span>. They do not specify what probability is, only what properties it must have. This allows:</p>
+
+        <ul>
+            <li><strong>Classical and Geometric Interpretation:</strong> These become special cases where \(P\) is defined by a uniform measure \(\mu\): \(P(A) = \mu(A)/\mu(\Omega)\). Conceptual issues ("what does equally probable mean?") are shifted from theory to model selection.</li>
+            
+            <li><strong>Frequentist Interpretation:</strong> The Law of Large Numbers proves that relative frequencies converge to a measure \(P\) satisfying the axioms. The axioms thus describe the ideal limiting object to which empirical frequencies converge.</li>
+            
+            <li><strong>Bayesian Interpretation:</strong> Dutch book arguments demonstrate that any coherent belief system must satisfy the axioms to avoid certain-loss bets. The axioms therefore provide rationality constraints for subjective probabilities.</li>
+        </ul>
+
+        <p><strong>Conceptual inconsistencies are resolved</strong> because:</p>
+        <ul>
+            <li>The same mathematical object \((\Omega, \mathcal{F}, P)\) underlies all interpretations</li>
+            <li>Disagreements about the "meaning" of probability become external to the theory: they concern how \(P\) is chosen or justified, not how it behaves mathematically</li>
+            <li>Paradoxes (such as Bertrand's) are viewed as consequences of inconsistent choices of \(\mathcal{F}\) or the measure, not of the axioms themselves</li>
+        </ul>
+
+        <h2>3. Relationship Between Probability Theory and Measure Theory</h2>
+
+        <p>Modern probability theory is constructed as a <span class="highlight">special case of measure theory</span>. Every probabilistic concept has a natural counterpart in measure theory.</p>
+
+        <h3>3.1. \(\sigma\)-Algebras</h3>
+
+        <div class="theorem-box">
+            <h4>Definition: \(\sigma\)-Algebra</h4>
+            <p>A \(\sigma\)-algebra \(\mathcal{F}\) on \(\Omega\) is a collection of subsets of \(\Omega\) (called events) that satisfies:</p>
+            <ul>
+                <li>\(\Omega \in \mathcal{F}\) and \(\emptyset \in \mathcal{F}\)</li>
+                <li>If \(A \in \mathcal{F}\), then the complement \(A^c = \Omega \setminus A \in \mathcal{F}\)</li>
+                <li>If \((A_i)_{i \ge 1}\) is a countable family in \(\mathcal{F}\), then \(\bigcup_{i=1}^{\infty} A_i \in \mathcal{F}\)</li>
+            </ul>
+        </div>
+
+        <p>The \(\sigma\)-algebra ensures that all relevant set operations (unions, intersections, complements) remain in the space of measurable events, providing structural stability to the theory.</p>
+
+        <h3>3.2. Probability Measures</h3>
+
+        <p>In general measure theory, a <strong>measure</strong> \(\mu\) on \((\Omega, \mathcal{F})\) assigns to each \(A \in \mathcal{F}\) a value \(\mu(A) \in [0, +\infty]\) with the properties:</p>
+        <ul>
+            <li>\(\mu(\emptyset) = 0\)</li>
+            <li>Countable additivity: if \(A_i\) are disjoint, \(\mu(\bigcup_i A_i) = \sum_i \mu(A_i)\)</li>
+        </ul>
+
+        <p>A <strong>probability measure</strong> is simply a normalized measure:</p>
+        <p style="text-align: center;">$$P(\Omega) = 1$$</p>
+
+        <p>This simple condition transforms a general measure space into a probability space. Probability theory inherits all the tools and theorems of measure theory.</p>
+
+        <h3>3.3. Measurable Functions and Random Variables</h3>
+
+        <div class="theorem-box">
+            <h4>Definition: Random Variable</h4>
+            <p>Let \((\Omega, \mathcal{F}, P)\) be a probability space and \((\mathbb{R}, \mathcal{B})\) the real line with Borel \(\sigma\)-algebra \(\mathcal{B}\).</p>
+            <p>A function \(X : \Omega \to \mathbb{R}\) is a <strong>random variable</strong> if it is <strong>measurable</strong>, that is:</p>
+            <p style="text-align: center;">$$X^{-1}(B) \in \mathcal{F} \quad \forall B \in \mathcal{B}$$</p>
+        </div>
+
+        <p>The <strong>distribution</strong> of \(X\) is the pushforward measure \(P_X\) on \(\mathbb{R}\) defined by:</p>
+        <p style="text-align: center;">$$P_X(B) = P(X \in B) = P(X^{-1}(B))$$</p>
+
+        <p><strong>Expected values and moments</strong> become integrals with respect to \(P\):</p>
+        <p style="text-align: center;">$$\mathbb{E}[X] = \int_{\Omega} X \, dP$$</p>
+
+        <p>In this way, probability theory is exactly measure theory with the additional constraint \(P(\Omega) = 1\). Concepts such as independence, conditional expectation, convergence of random variables, and limit theorems are naturally expressed with measure-theoretic tools.</p>
+
+        <h2>4. Derivation of Properties from the Axioms</h2>
+
+        <p>Starting from Kolmogorov's axioms, we can rigorously derive fundamental properties such as subadditivity and the inclusion-exclusion principle.</p>
+
+        <h3>4.1. Subadditivity</h3>
+
+        <div class="theorem-box">
+            <h4>Theorem: Subadditivity</h4>
+            <p>For every countable family of events \((A_i)_{i \ge 1}\) in \(\mathcal{F}\), we have:</p>
+            <p style="text-align: center;">$$P\left(\bigcup_{i=1}^{\infty} A_i\right) \le \sum_{i=1}^{\infty} P(A_i)$$</p>
+        </div>
+
+        <div class="proof-box">
+            <h4>Proof</h4>
+            <p>The events \(A_i\) are not necessarily disjoint. We construct a disjoint family \((B_i)\) that covers the same union:</p>
+            <ul>
+                <li>\(B_1 = A_1\)</li>
+                <li>\(B_2 = A_2 \setminus A_1\)</li>
+                <li>\(B_3 = A_3 \setminus (A_1 \cup A_2)\)</li>
+                <li>In general: \(B_k = A_k \setminus \bigcup_{j=1}^{k-1} A_j\)</li>
+            </ul>
+            
+            <p>By construction:</p>
+            <ol>
+                <li>The \(B_i\) are <strong>pairwise disjoint</strong></li>
+                <li>\(\bigcup_{i=1}^{\infty} B_i = \bigcup_{i=1}^{\infty} A_i\) (same union)</li>
+                <li>\(B_i \subseteq A_i\) for each \(i\), so by monotonicity: \(P(B_i) \le P(A_i)\)</li>
+            </ol>
+            
+            <p>Applying the axiom of countable additivity to the disjoint family \((B_i)\):</p>
+            <p style="text-align: center;">$$P\left(\bigcup_{i=1}^{\infty} A_i\right) = P\left(\bigcup_{i=1}^{\infty} B_i\right) = \sum_{i=1}^{\infty} P(B_i) \le \sum_{i=1}^{\infty} P(A_i)$$</p>
+            <p>This proves subadditivity directly from the axioms. □</p>
+        </div>
+
+        <h3>4.2. Inclusion-Exclusion Principle</h3>
+
+        <p>The inclusion-exclusion principle provides an exact formula for the probability of unions of events.</p>
+
+        <div class="theorem-box">
+            <h4>Theorem: Inclusion-Exclusion (Two Events)</h4>
+            <p>For two events \(A\) and \(B\):</p>
+            <p style="text-align: center;">$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$</p>
+        </div>
+
+        <div class="proof-box">
+            <h4>Proof for two events</h4>
+            <p>We decompose \(B\) into disjoint parts:</p>
+            <p style="text-align: center;">$$B = (B \setminus A) \cup (A \cap B)$$</p>
+            <p>where \((B \setminus A)\) and \((A \cap B)\) are disjoint. By additivity:</p>
+            <p style="text-align: center;">$$P(B) = P(B \setminus A) + P(A \cap B)$$</p>
+            <p>Therefore:</p>
+            <p style="text-align: center;">$$P(B \setminus A) = P(B) - P(A \cap B)$$</p>
+            
+            <p>Now we write \(A \cup B\) as a disjoint union:</p>
+            <p style="text-align: center;">$$A \cup B = A \cup (B \setminus A)$$</p>
+            <p>where \(A\) and \(B \setminus A\) are disjoint. Applying additivity:</p>
+            <p style="text-align: center;">$$P(A \cup B) = P(A) + P(B \setminus A) = P(A) + P(B) - P(A \cap B)$$</p>
+            <p>This completes the proof. □</p>
+        </div>
+
+        <div class="theorem-box">
+            <h4>Theorem: Inclusion-Exclusion (Three Events)</h4>
+            <p>For three events \(A\), \(B\), \(C\):</p>
+            <p style="text-align: center;">$$\begin{aligned}
+            P(A \cup B \cup C) &= P(A) + P(B) + P(C) \\
+            &\quad - [P(A \cap B) + P(A \cap C) + P(B \cap C)] \\
+            &\quad + P(A \cap B \cap C)
+            \end{aligned}$$</p>
+        </div>
+
+        <div class="proof-box">
+            <h4>Proof sketch</h4>
+            <p>When we sum \(P(A) + P(B) + P(C)\), each pairwise intersection is counted twice. We therefore subtract:</p>
+            <p style="text-align: center;">$$P(A \cap B), \quad P(A \cap C), \quad P(B \cap C)$$</p>
+            
+            <p>However, the region \(A \cap B \cap C\) has been:</p>
+            <ul>
+                <li>Added 3 times (in \(P(A)\), \(P(B)\), \(P(C)\))</li>
+                <li>Subtracted 3 times (in the three pairwise intersections)</li>
+            </ul>
+            <p>Thus it has been completely removed and we must add it back once:</p>
+            <p style="text-align: center;">$$+ P(A \cap B \cap C)$$</p>
+            <p>This gives the complete inclusion-exclusion formula for three events. □</p>
+        </div>
+
+        <div class="theorem-box">
+            <h4>Theorem: Inclusion-Exclusion (General Case)</h4>
+            <p>For \(n\) events \(A_1, A_2, \ldots, A_n\), the general formula is:</p>
+            <p style="text-align: center;">$$\begin{aligned}
+            P\left(\bigcup_{i=1}^{n} A_i\right) &= \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i \cap A_j) \\
+            &\quad + \sum_{1 \le i < j < k \le n} P(A_i \cap A_j \cap A_k) - \cdots \\
+            &\quad + (-1)^{n-1} P(A_1 \cap A_2 \cap \cdots \cap A_n)
+            \end{aligned}$$</p>
+            <p>This structure is completely general and holds for any measure, not only for probability measures.</p>
+        </div>
+
+        <h2>Conclusion</h2>
+        
+        <p>The axiomatic approach to probability, founded on measure theory, provides a rigorous mathematical foundation that unifies and reconciles different historical interpretations. Kolmogorov's axioms allow fundamental properties such as subadditivity and the inclusion-exclusion principle to be derived in a purely logical manner, independent of the philosophical interpretation one prefers to adopt.</p>
+        
+        <p>This synthesis between probability and measure theory represents one of the major successes of twentieth-century mathematics, enabling probability to be treated with the same rigor as mathematical analysis and opening the way to profound theoretical developments such as limit theorems, stochastic processes, and modern statistical inference.</p>
+        
+        <div style="display: flex; justify-content: center; margin-top: 3rem;">
+            <a href="../index.html" style="background-color: #3b82f6; color: #ffffff; text-decoration: none; font-weight: bold; padding: 0.8rem 2rem; border-radius: 8px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.4); display: inline-block;" onmouseover="this.style.backgroundColor='#1e3a8a'; this.style.transform='scale(1.05)'" onmouseout="this.style.backgroundColor='#3b82f6'; this.style.transform='scale(1)'">← Back to Home</a>
+        </div>
+    </div>
+
+    <footer style="background: #0f172a; color: white; text-align: center; padding: 2rem 0; margin-top: 3rem; box-shadow: 0 -2px 10px rgba(0,0,0,0.6);">
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem;">
+        <p><small>&copy; 2025 Francesco Pio Fata — Homework 9</small></p>
+    </footer>
+</body>
+</html>
