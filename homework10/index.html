@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 10 - Poisson Process Simulation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                        url('https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=3000') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h2, strong {
+            color: #334f9f; 
+        }
+
+        main h2, section h2 {
+            text-align: left;
+            color: #1e3a8a; 
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        .content-box {
+            max-width: 1200px;       
+            margin: 0 auto;         
+            padding: 2rem;          
+            background: rgba(20, 20, 30, 0.85);  
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6; 
+            color: #ffffff; 
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        canvas {
+            width: 100%;
+            max-width: 100%;
+            height: 400px;
+            background: rgba(15, 15, 25, 0.9);
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #3b82f6;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #a5d6ff;
+        }
+
+        .formula {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #3b82f6;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            color: #a5d6ff;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Homework 10 - Poisson Process Simulation</h1>
+            <p class="subtitle">Simulating Counting Processes in Continuous Time</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>Understanding the Poisson Process</h2>
+            
+            <p>
+                <strong>What is a Counting Process?</strong><br>
+                A counting process is a stochastic process that represents the cumulative number of events that occur over time. In our simulation, we model a process where events occur randomly and independently at a constant average rate λ (lambda) over a time interval T.
+            </p>
+
+            <p>
+                To approximate this continuous-time process, we divide the interval [0, T] into n small subintervals. In each subinterval, an event occurs with probability λ/n. As n increases, this discrete approximation converges to a continuous-time Poisson process.
+            </p>
+
+            <div class="info-box">
+                <strong>🎯 The Poisson Process</strong><br>
+                The simulation approximates a Poisson process, one of the most fundamental stochastic processes in probability theory. It models random events occurring over time with the following key properties:
+                <ul>
+                    <li><strong>Independence:</strong> Events in disjoint time intervals are independent</li>
+                    <li><strong>Stationarity:</strong> The rate of events is constant over time</li>
+                    <li><strong>Rare Events:</strong> The probability of multiple events in a tiny interval is negligible</li>
+                </ul>
+            </div>
+
+            <h3>Theoretical Properties</h3>
+            
+            <p><strong>1. Distribution of Event Counts</strong></p>
+            <p>The number of events N(T) in an interval of length T follows a Poisson distribution:</p>
+            <div class="formula">
+                P(N(T) = k) = (λT)^k × e^(-λT) / k!
+            </div>
+            <p>where k = 0, 1, 2, 3, ...</p>
+
+            <p><strong>2. Expected Value and Variance</strong></p>
+            <p>For a time interval of length T:</p>
+            <div class="formula">
+                E[N(T)] = λT<br>
+                Var(N(T)) = λT
+            </div>
+            <p>Notably, the mean equals the variance, which is a characteristic property of the Poisson distribution.</p>
+
+            <p><strong>3. The Rate Parameter λ</strong></p>
+            <p>
+                The parameter λ represents the average number of events per unit time. It controls the intensity of the process:
+            </p>
+            <ul>
+                <li><strong>λ = 5:</strong> Expect 5 events per unit time on average</li>
+                <li><strong>λ = 10:</strong> Expect 10 events per unit time on average (twice as many)</li>
+                <li><strong>λ = 20:</strong> Expect 20 events per unit time on average (four times as many as λ = 5)</li>
+            </ul>
+
+            <h2>Interactive Simulation</h2>
+
+            <div class="demo-section">
+                <h3>Simulation Parameters</h3>
+                
+                <div class="form-group">
+                    <label for="lambda">Rate Parameter λ (events per unit time):</label>
+                    <input type="number" id="lambda" min="1" max="50" value="10" step="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="n">Number of Subintervals n:</label>
+                    <input type="number" id="n" min="100" max="10000" value="5000" step="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="paths">Number of Sample Paths:</label>
+                    <select id="paths">
+                        <option value="1">1 path</option>
+                        <option value="5" selected>5 paths</option>
+                        <option value="10">10 paths</option>
+                        <option value="20">20 paths</option>
+                        <option value="50">50 paths</option>
+                    </select>
+                </div>
+
+                <button onclick="runSimulation()">▶ Run Simulation</button>
+                <button onclick="resetSimulation()">🔄 Reset</button>
+
+                <div id="statsContainer" style="display:none;">
+                    <h3>Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="meanEvents">-</div>
+                            <div class="stat-label">Mean Events</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="varEvents">-</div>
+                            <div class="stat-label">Variance</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="theoreticalMean">-</div>
+                            <div class="stat-label">Theoretical Mean (λT)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="minEvents">-</div>
+                            <div class="stat-label">Min Events</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="maxEvents">-</div>
+                            <div class="stat-label">Max Events</div>
+                        </div>
+                    </div>
+                </div>
+
+                <canvas id="processChart"></canvas>
+                <canvas id="distributionChart"></canvas>
+            </div>
+
+            <h3>Interpretation</h3>
+            <p>
+                <strong>What the graphs show:</strong>
+            </p>
+            <ul>
+                <li><strong>Process Evolution (Top Graph):</strong> Each line represents one realization of the counting process, showing the cumulative number of events over time. The step-like nature reflects the discrete events occurring at random times.</li>
+                <li><strong>Distribution of Final Values (Bottom Graph):</strong> This histogram shows how many events occurred by time T = 1 across all simulated paths. As we run more simulations, this distribution approaches a Poisson distribution with mean λT.</li>
+            </ul>
+
+            <p>
+                <strong>Key Observations:</strong>
+            </p>
+            <ul>
+                <li>As n increases, the discrete approximation becomes smoother and more closely resembles the theoretical continuous Poisson process</li>
+                <li>Higher values of λ produce more events and steeper sample paths</li>
+                <li>The variability between different paths reflects the stochastic (random) nature of the process</li>
+                <li>The empirical mean and variance should be close to λT when many paths are simulated</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>💡 Real-World Applications</strong><br>
+                Poisson processes model many real phenomena:
+                <ul>
+                    <li>Customer arrivals at a service center</li>
+                    <li>Phone calls arriving at a call center</li>
+                    <li>Radioactive particle emissions</li>
+                    <li>Earthquakes in a region</li>
+                    <li>Website visits</li>
+                    <li>Insurance claims</li>
+                </ul>
+            </div>
+
+            <h2>Advanced Analysis: Inter-arrival Times</h2>
+            
+            <p>
+                Another important property of the Poisson process concerns the time between consecutive events, known as <strong>inter-arrival times</strong>. These waiting times follow an exponential distribution with rate parameter λ.
+            </p>
+
+            <div class="formula">
+                f(t) = λe^(-λt) for t ≥ 0<br>
+                E[T] = 1/λ<br>
+                Var(T) = 1/λ²
+            </div>
+
+            <p>
+                This means that if events occur at rate λ = 10 per unit time, the average time between events is 1/10 = 0.1 time units.
+            </p>
+
+            <div class="demo-section">
+                <h3>Inter-arrival Time Analysis</h3>
+                <button onclick="analyzeInterarrivals()">📈 Analyze Inter-arrival Times</button>
+                
+                <div id="interarrivalStats" style="display:none;">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="meanInterarrival">-</div>
+                            <div class="stat-label">Mean Inter-arrival Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="theoreticalInterarrival">-</div>
+                            <div class="stat-label">Theoretical Mean (1/λ)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stdInterarrival">-</div>
+                            <div class="stat-label">Std Deviation</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="numInterarrivals">-</div>
+                            <div class="stat-label">Total Inter-arrivals</div>
+                        </div>
+                    </div>
+                    <canvas id="interarrivalChart"></canvas>
+                </div>
+            </div>
+
+            <h2>Convergence Analysis</h2>
+            
+            <p>
+                As the number of subintervals n increases, our discrete approximation converges to the true continuous Poisson process. Let's examine how the approximation quality improves with larger n values.
+            </p>
+
+            <div class="demo-section">
+                <h3>Compare Different Discretizations</h3>
+                <p>This simulation compares the same process with different levels of granularity.</p>
+                
+                <div class="form-group">
+                    <label for="compareλ">Rate Parameter λ:</label>
+                    <input type="number" id="compareλ" min="1" max="30" value="10" step="1">
+                </div>
+
+                <button onclick="runConvergenceAnalysis()">🔬 Run Convergence Analysis</button>
+                
+                <div id="convergenceResults" style="display:none;">
+                    <canvas id="convergenceChart"></canvas>
+                    <div class="info-box" style="margin-top: 1rem;">
+                        <strong>Interpretation:</strong> The graphs show the same random process simulated with different values of n (100, 500, 1000, 5000). As n increases, the process becomes smoother and more closely approximates the theoretical continuous Poisson process. Notice how paths with larger n values have more frequent, smaller increments.
+                    </div>
+                </div>
+            </div>
+
+            <h2>Probabilistic Properties</h2>
+
+            <div class="demo-section">
+                <h3>Test Theoretical Predictions</h3>
+                <p>Verify that the simulated process matches theoretical Poisson properties:</p>
+                
+                <div class="form-group">
+                    <label for="testLambda">Rate Parameter λ:</label>
+                    <input type="number" id="testLambda" min="1" max="30" value="8" step="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="numTrials">Number of Trials:</label>
+                    <select id="numTrials">
+                        <option value="100">100</option>
+                        <option value="500">500</option>
+                        <option value="1000" selected>1000</option>
+                        <option value="5000">5000</option>
+                    </select>
+                </div>
+
+                <button onclick="testPoissonProperties()">🧪 Test Poisson Properties</button>
+                
+                <div id="testResults" style="display:none;">
+                    <h4 style="color: #3b82f6; margin-top: 1rem;">Chi-Square Goodness of Fit Test</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="chiSquare">-</div>
+                            <div class="stat-label">χ² Statistic</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pValue">-</div>
+                            <div class="stat-label">P-value</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="fitResult">-</div>
+                            <div class="stat-label">Goodness of Fit</div>
+                        </div>
+                    </div>
+                    <canvas id="goodnessChart"></canvas>
+                    <div class="info-box" style="margin-top: 1rem;">
+                        <strong>Interpretation:</strong> The chi-square test compares the observed frequency distribution with the theoretical Poisson distribution. A p-value > 0.05 suggests the data is consistent with a Poisson distribution. The bars show observed frequencies (blue) versus expected theoretical frequencies (red outline).
+                    </div>
+                </div>
+            </div>
+
+            <h2>Summary and Conclusions</h2>
+            
+            <p>
+                This simulation demonstrates how a simple discrete process—where each small time interval has a fixed probability of containing an event—can approximate a continuous-time Poisson process as the discretization becomes finer.
+            </p>
+
+            <p><strong>Key Takeaways:</strong></p>
+            <ul>
+                <li>The Poisson process is characterized by independent, randomly occurring events at a constant average rate λ</li>
+                <li>The number of events in any time interval T follows a Poisson distribution with mean and variance both equal to λT</li>
+                <li>Inter-arrival times between consecutive events follow an exponential distribution with mean 1/λ</li>
+                <li>As the discretization parameter n increases, the approximation converges to the true continuous process</li>
+                <li>The process has wide applications in modeling random phenomena in nature, technology, and business</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>🎓 Mathematical Foundation</strong><br>
+                The Poisson process can be rigorously defined through its infinitesimal properties:
+                <ul>
+                    <li>P(exactly 1 event in [t, t+Δt]) ≈ λΔt as Δt → 0</li>
+                    <li>P(2 or more events in [t, t+Δt]) ≈ o(Δt) (negligible)</li>
+                    <li>P(no events in [t, t+Δt]) ≈ 1 - λΔt</li>
+                </ul>
+                These properties lead directly to the Poisson distribution for finite time intervals.
+            </div>
+        </article>
+
+        <div class="back-home-box">
+            <a href="../index.html" class="back-home-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p><small>&copy; 2025 Francesco Pio Fata – Homework 10</small></p>
+    </footer>
+
+    <script>
+        const T = 1; // Time interval
+        let simulations = [];
+
+        function runSimulation() {
+            const lambda = parseFloat(document.getElementById('lambda').value);
+            const n = parseInt(document.getElementById('n').value);
+            const numPaths = parseInt(document.getElementById('paths').value);
+
+            simulations = [];
+
+            // Run multiple simulations
+            for (let path = 0; path < numPaths; path++) {
+                const times = [];
+                const counts = [];
+                let currentCount = 0;
+
+                times.push(0);
+                counts.push(0);
+
+                // Simulate the process
+                for (let i = 0; i < n; i++) {
+                    const timePoint = (i + 1) * T / n;
+                    
+                    // Event occurs with probability lambda/n
+                    if (Math.random() < lambda / n) {
+                        currentCount++;
+                    }
+
+                    times.push(timePoint);
+                    counts.push(currentCount);
+                }
+
+                simulations.push({ times, counts, finalCount: currentCount });
+            }
+
+            // Calculate statistics
+            const finalCounts = simulations.map(s => s.finalCount);
+            const mean = finalCounts.reduce((a, b) => a + b, 0) / finalCounts.length;
+            const variance = finalCounts.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / finalCounts.length;
+            const min = Math.min(...finalCounts);
+            const max = Math.max(...finalCounts);
+            const theoretical = lambda * T;
+
+            // Update stats display
+            document.getElementById('meanEvents').textContent = mean.toFixed(2);
+            document.getElementById('varEvents').textContent = variance.toFixed(2);
+            document.getElementById('theoreticalMean').textContent = theoretical.toFixed(2);
+            document.getElementById('minEvents').textContent = min;
+            document.getElementById('maxEvents').textContent = max;
+            document.getElementById('statsContainer').style.display = 'block';
+
+            // Draw charts
+            drawProcessChart();
+            drawDistributionChart(finalCounts, lambda);
+        }
+
+        function drawProcessChart() {
+            const canvas = document.getElementById('processChart');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            // Clear canvas
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Find max count for scaling
+            const maxCount = Math.max(...simulations.map(s => Math.max(...s.counts)));
+
+            // Draw grid
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (width - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+
+                const y = padding + (height - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Draw labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Time', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Cumulative Events', 0, 0);
+            ctx.restore();
+
+            // Draw sample paths
+            const colors = ['#3b82f6', '#60a5fa', '#93c5fd', '#10b981', '#34d399', '#6ee7b7', '#f59e0b', '#fbbf24', '#fcd34d', '#ef4444'];
+            
+            simulations.forEach((sim, idx) => {
+                ctx.strokeStyle = colors[idx % colors.length];
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                for (let i = 0; i < sim.times.length; i++) {
+                    const x = padding + (width - 2 * padding) * sim.times[i] / T;
+                    const y = height - padding - (height - 2 * padding) * sim.counts[i] / (maxCount + 1);
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                ctx.stroke();
+            });
+
+            // Draw axis labels
+            ctx.fillStyle = '#a5d6ff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (width - 2 * padding) * i / 10;
+                ctx.fillText((i / 10).toFixed(1), x, height - padding + 20);
+            }
+
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i++) {
+                const y = height - padding - (height - 2 * padding) * i / 10;
+                const value = Math.round((maxCount + 1) * i / 10);
+                ctx.fillText(value.toString(), padding - 10, y + 5);
+            }
+        }
+
+        function drawDistributionChart(finalCounts, lambda) {
+            const canvas = document.getElementById('distributionChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Calculate histogram
+            const histogram = {};
+            finalCounts.forEach(count => {
+                histogram[count] = (histogram[count] || 0) + 1;
+            });
+
+            const values = Object.keys(histogram).map(Number).sort((a, b) => a - b);
+            const frequencies = values.map(v => histogram[v]);
+            const maxFreq = Math.max(...frequencies);
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Draw labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Number of Events at T = 1', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Frequency', 0, 0);
+            ctx.restore();
+
+            // Draw bars
+            if (values.length > 0) {
+                const barWidth = (width - 2 * padding) / (values.length + 1);
+                
+                values.forEach((value, idx) => {
+                    const x = padding + barWidth * (idx + 0.5);
+                    const barHeight = (height - 2 * padding) * frequencies[idx] / maxFreq;
+                    const y = height - padding - barHeight;
+
+                    const gradient = ctx.createLinearGradient(x, y, x, height - padding);
+                    gradient.addColorStop(0, '#3b82f6');
+                    gradient.addColorStop(1, '#1e3a8a');
+
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(x - barWidth * 0.4, y, barWidth * 0.8, barHeight);
+
+                    // Draw value labels
+                    ctx.fillStyle = '#a5d6ff';
+                    ctx.font = '11px Arial';
+                    ctx.fillText(value.toString(), x, height - padding + 15);
+                    ctx.fillText(frequencies[idx].toString(), x, y - 5);
+                });
+            }
+
+            // Draw expected value line
+            const expectedValue = lambda * T;
+            const expectedX = padding + (width - 2 * padding) * (expectedValue - Math.min(...values)) / (Math.max(...values) - Math.min(...values));
+            
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(expectedX, padding);
+            ctx.lineTo(expectedX, height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#ef4444';
+            ctx.font = '12px Arial';
+            ctx.fillText('E[N(T)] = ' + expectedValue.toFixed(1), expectedX, padding - 10);
+        }
+
+        function resetSimulation() {
+            simulations = [];
+            const processCanvas = document.getElementById('processChart');
+            const distCanvas = document.getElementById('distributionChart');
+            
+            const processCtx = processCanvas.getContext('2d');
+            const distCtx = distCanvas.getContext('2d');
+            
+            processCtx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            processCtx.fillRect(0, 0, processCanvas.width, processCanvas.height);
+            
+            distCtx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            distCtx.fillRect(0, 0, distCanvas.width, distCanvas.height);
+            
+            document.getElementById('statsContainer').style.display = 'none';
+        }
+
+        function analyzeInterarrivals() {
+            if (simulations.length === 0) {
+                alert('Please run a simulation first!');
+                return;
+            }
+
+            const lambda = parseFloat(document.getElementById('lambda').value);
+            
+            // Collect all inter-arrival times from all simulations
+            const allInterarrivals = [];
+            
+            simulations.forEach(sim => {
+                const eventTimes = [];
+                for (let i = 0; i < sim.times.length; i++) {
+                    if (i > 0 && sim.counts[i] > sim.counts[i-1]) {
+                        eventTimes.push(sim.times[i]);
+                    }
+                }
+                
+                // Calculate inter-arrivals
+                for (let i = 1; i < eventTimes.length; i++) {
+                    allInterarrivals.push(eventTimes[i] - eventTimes[i-1]);
+                }
+            });
+
+            if (allInterarrivals.length === 0) {
+                alert('No events occurred in the simulations!');
+                return;
+            }
+
+            // Calculate statistics
+            const mean = allInterarrivals.reduce((a, b) => a + b, 0) / allInterarrivals.length;
+            const variance = allInterarrivals.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / allInterarrivals.length;
+            const std = Math.sqrt(variance);
+            const theoretical = 1 / lambda;
+
+            document.getElementById('meanInterarrival').textContent = mean.toFixed(4);
+            document.getElementById('theoreticalInterarrival').textContent = theoretical.toFixed(4);
+            document.getElementById('stdInterarrival').textContent = std.toFixed(4);
+            document.getElementById('numInterarrivals').textContent = allInterarrivals.length;
+            document.getElementById('interarrivalStats').style.display = 'block';
+
+            // Draw histogram
+            drawInterarrivalHistogram(allInterarrivals, lambda);
+        }
+
+        function drawInterarrivalHistogram(interarrivals, lambda) {
+            const canvas = document.getElementById('interarrivalChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Create bins
+            const numBins = 20;
+            const maxValue = Math.max(...interarrivals);
+            const binWidth = maxValue / numBins;
+            const bins = new Array(numBins).fill(0);
+
+            interarrivals.forEach(val => {
+                const binIndex = Math.min(Math.floor(val / binWidth), numBins - 1);
+                bins[binIndex]++;
+            });
+
+            const maxFreq = Math.max(...bins);
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Inter-arrival Time', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Frequency', 0, 0);
+            ctx.restore();
+
+            // Draw histogram bars
+            const availableWidth = width - 2 * padding;
+            const barWidthPixels = availableWidth / numBins;
+
+            bins.forEach((freq, i) => {
+                const x = padding + i * barWidthPixels;
+                const barHeight = (height - 2 * padding) * freq / maxFreq;
+                const y = height - padding - barHeight;
+
+                const gradient = ctx.createLinearGradient(x, y, x, height - padding);
+                gradient.addColorStop(0, '#10b981');
+                gradient.addColorStop(1, '#059669');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x, y, barWidthPixels * 0.9, barHeight);
+            });
+
+            // Draw theoretical exponential curve
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            const totalSamples = interarrivals.length;
+            for (let i = 0; i <= 100; i++) {
+                const t = (i / 100) * maxValue;
+                const theoreticalDensity = lambda * Math.exp(-lambda * t);
+                const theoreticalFreq = theoreticalDensity * binWidth * totalSamples;
+                
+                const x = padding + (width - 2 * padding) * (t / maxValue);
+                const y = height - padding - (height - 2 * padding) * (theoreticalFreq / maxFreq);
+                
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Legend
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(width - 200, padding + 10, 20, 15);
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Observed', width - 175, padding + 22);
+
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(width - 200, padding + 40);
+            ctx.lineTo(width - 180, padding + 40);
+            ctx.stroke();
+            ctx.fillText('Exponential(λ)', width - 175, padding + 45);
+        }
+
+        function runConvergenceAnalysis() {
+            const lambda = parseFloat(document.getElementById('compareλ').value);
+            const T = 1;
+            const nValues = [100, 500, 1000, 5000];
+            
+            // Use same random seed for fair comparison
+            const canvas = document.getElementById('convergenceChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 500;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Generate one "true" sequence of events
+            const trueEvents = [];
+            const maxN = Math.max(...nValues);
+            for (let i = 0; i < maxN; i++) {
+                if (Math.random() < lambda / maxN) {
+                    trueEvents.push(i);
+                }
+            }
+
+            let maxCount = 0;
+            const pathsData = [];
+
+            // Create paths for each n
+            nValues.forEach(n => {
+                const times = [0];
+                const counts = [0];
+                let currentCount = 0;
+
+                for (let i = 0; i < n; i++) {
+                    const timePoint = (i + 1) * T / n;
+                    
+                    // Check if any true event falls in this bin
+                    const binStart = i * maxN / n;
+                    const binEnd = (i + 1) * maxN / n;
+                    
+                    const eventsInBin = trueEvents.filter(e => e >= binStart && e < binEnd).length;
+                    currentCount += eventsInBin;
+
+                    times.push(timePoint);
+                    counts.push(currentCount);
+                }
+
+                pathsData.push({ n, times, counts });
+                maxCount = Math.max(maxCount, currentCount);
+            });
+
+            // Draw grid
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (width - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+
+                const y = padding + (height - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Time', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Cumulative Events', 0, 0);
+            ctx.restore();
+
+            // Draw paths
+            const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6'];
+            
+            pathsData.forEach((path, idx) => {
+                ctx.strokeStyle = colors[idx];
+                ctx.lineWidth = 2 + idx * 0.5;
+                ctx.beginPath();
+
+                for (let i = 0; i < path.times.length; i++) {
+                    const x = padding + (width - 2 * padding) * path.times[i] / T;
+                    const y = height - padding - (height - 2 * padding) * path.counts[i] / (maxCount + 1);
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
+            // Legend
+            const legendX = width - 180;
+            const legendY = padding + 20;
+            pathsData.forEach((path, idx) => {
+                ctx.strokeStyle = colors[idx];
+                ctx.lineWidth = 2 + idx * 0.5;
+                ctx.beginPath();
+                ctx.moveTo(legendX, legendY + idx * 25);
+                ctx.lineTo(legendX + 30, legendY + idx * 25);
+                ctx.stroke();
+
+                ctx.fillStyle = '#f1f1f1';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`n = ${path.n}`, legendX + 35, legendY + idx * 25 + 4);
+            });
+
+            document.getElementById('convergenceResults').style.display = 'block';
+        }
+
+        function poissonPMF(k, lambda) {
+            // Calculate Poisson probability mass function
+            let result = Math.exp(-lambda);
+            for (let i = 1; i <= k; i++) {
+                result *= lambda / i;
+            }
+            return result;
+        }
+
+        function testPoissonProperties() {
+            const lambda = parseFloat(document.getElementById('testLambda').value);
+            const numTrials = parseInt(document.getElementById('numTrials').value);
+            const n = 5000;
+            const T = 1;
+
+            // Run trials
+            const finalCounts = [];
+            for (let trial = 0; trial < numTrials; trial++) {
+                let count = 0;
+                for (let i = 0; i < n; i++) {
+                    if (Math.random() < lambda / n) count++;
+                }
+                finalCounts.push(count);
+            }
+
+            // Calculate observed frequencies
+            const observed = {};
+            finalCounts.forEach(count => {
+                observed[count] = (observed[count] || 0) + 1;
+            });
+
+            // Calculate expected frequencies
+            const minCount = Math.min(...finalCounts);
+            const maxCount = Math.max(...finalCounts);
+            const expected = {};
+            
+            for (let k = minCount; k <= maxCount; k++) {
+                expected[k] = poissonPMF(k, lambda * T) * numTrials;
+            }
+
+            // Chi-square test
+            let chiSquare = 0;
+            for (let k = minCount; k <= maxCount; k++) {
+                const obs = observed[k] || 0;
+                const exp = expected[k];
+                if (exp > 5) {
+                    chiSquare += Math.pow(obs - exp, 2) / exp;
+                }
+            }
+
+            const degreesOfFreedom = Object.keys(expected).length - 2;
+            const pValue = 1 - chiSquareCDF(chiSquare, degreesOfFreedom);
+
+            document.getElementById('chiSquare').textContent = chiSquare.toFixed(2);
+            document.getElementById('pValue').textContent = pValue.toFixed(4);
+            document.getElementById('fitResult').textContent = pValue > 0.05 ? 'Good Fit ✓' : 'Poor Fit ✗';
+            document.getElementById('testResults').style.display = 'block';
+
+            drawGoodnessChart(observed, expected, minCount, maxCount);
+        }
+
+        function chiSquareCDF(x, df) {
+            // Approximation of chi-square CDF using gamma function
+            if (x <= 0) return 0;
+            if (df <= 0) return 0;
+            
+            // Simple approximation
+            const k = df / 2;
+            const term = Math.pow(x / 2, k - 1) * Math.exp(-x / 2);
+            const gammaK = gamma(k);
+            
+            let sum = 0;
+            for (let i = 0; i < 20; i++) {
+                sum += Math.pow(x / 2, i) / gamma(k + i + 1);
+            }
+            
+            return sum * Math.exp(-x / 2);
+        }
+
+        function gamma(z) {
+            // Stirling's approximation
+            if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+            z -= 1;
+            const g = 7;
+            const C = [0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+                       771.32342877765313, -176.61502916214059, 12.507343278686905,
+                       -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+            
+            let x = C[0];
+            for (let i = 1; i < g + 2; i++) {
+                x += C[i] / (z + i);
+            }
+            
+            const t = z + g + 0.5;
+            return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+        }
+
+        function drawGoodnessChart(observed, expected, minCount, maxCount) {
+            const canvas = document.getElementById('goodnessChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            const values = [];
+            for (let k = minCount; k <= maxCount; k++) {
+                values.push(k);
+            }
+
+            const maxFreq = Math.max(
+                ...values.map(k => Math.max(observed[k] || 0, expected[k] || 0))
+            );
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Number of Events', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Frequency', 0, 0);
+            ctx.restore();
+
+            // Draw bars
+            const barWidth = (width - 2 * padding) / (values.length * 2);
+            
+            values.forEach((k, idx) => {
+                const x = padding + (width - 2 * padding) * idx / values.length;
+                
+                // Observed
+                const obsHeight = (height - 2 * padding) * (observed[k] || 0) / maxFreq;
+                const obsY = height - padding - obsHeight;
+                
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(x + barWidth * 0.2, obsY, barWidth * 0.8, obsHeight);
+                
+                // Expected
+                const expHeight = (height - 2 * padding) * (expected[k] || 0) / maxFreq;
+                const expY = height - padding - expHeight;
+                
+                ctx.strokeStyle = '#ef4444';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x + barWidth * 1.2, expY, barWidth * 0.8, expHeight);
+
+                // Label
+                ctx.fillStyle = '#a5d6ff';
+                ctx.font = '11px Arial';
+                ctx.fillText(k.toString(), x + barWidth, height - padding + 15);
+            });
+
+            // Legend
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillRect(width - 200, padding + 10, 20, 15);
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Observed', width - 175, padding + 22);
+
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(width - 200, padding + 35, 20, 15);
+            ctx.fillText('Expected (Poisson)', width - 175, padding + 47);
+        }
+
+        // Run initial simulation on load
+        window.addEventListener('load', () => {
+            runSimulation();
+        });
+    </script>
+</body>
+</html>
