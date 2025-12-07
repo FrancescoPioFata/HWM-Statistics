@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 11 - Stochastic Differential Equations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #f1f1f1;
+            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+                        url('https://plus.unsplash.com/premium_photo-1714618828448-abf8732500c6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=3000') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h2, strong {
+            color: #334f9f; 
+        }
+
+        main h2, section h2 {
+            text-align: left;
+            color: #1e3a8a; 
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(25, 25, 35, 0.9);
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 2.0rem;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.6);
+        }
+
+        .content-box {
+            max-width: 1200px;       
+            margin: 0 auto;         
+            padding: 2rem;          
+            background: rgba(20, 20, 30, 0.85);  
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .back-home-box {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .back-home-link {
+            background-color: #3b82f6; 
+            color: #ffffff; 
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .back-home-link:hover {
+            background-color: #1e3a8a;
+            transform: scale(1.05);
+        }
+
+        .demo-section {
+            background: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem;
+            border: 2px solid #3b82f6;
+            border-radius: 4px;
+            background: rgba(15, 15, 25, 0.8);
+            color: #f1f1f1;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+
+        canvas {
+            width: 100%;
+            max-width: 100%;
+            height: 400px;
+            background: rgba(15, 15, 25, 0.9);
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #3b82f6;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #a5d6ff;
+        }
+
+        .formula {
+            background: rgba(15, 15, 25, 0.9);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid #3b82f6;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            color: #a5d6ff;
+            font-size: 1.1rem;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mode-button {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid #3b82f6;
+            color: #f1f1f1;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-button:hover {
+            background: rgba(59, 130, 246, 0.4);
+        }
+
+        .mode-button.active {
+            background: #3b82f6;
+            font-weight: bold;
+        }
+
+        .sde-inputs {
+            display: none;
+        }
+
+        .sde-inputs.active {
+            display: block;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .preset-button {
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.3);
+            border: 1px solid #10b981;
+            color: #f1f1f1;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .preset-button:hover {
+            background: rgba(16, 185, 129, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📈 Homework 11 - Stochastic Differential Equations</h1>
+            <p class="subtitle">Simulating Wiener Processes and SDEs with Euler-Maruyama Method</p>
+        </div>
+    </header>
+
+    <main>
+        <article class="content-box">
+            <h2>From Discrete to Continuous: Wiener Processes</h2>
+            
+            <p>
+                <strong>What is a Wiener Process (Brownian Motion)?</strong><br>
+                Building on our previous work with counting processes (which had discrete jumps), we now explore continuous stochastic processes. A Wiener process W(t), also known as Brownian motion, is a continuous-time stochastic process with the following fundamental properties:
+            </p>
+
+            <div class="info-box">
+                <strong>🎯 Key Properties of Wiener Process</strong><br>
+                <ul>
+                    <li><strong>W(0) = 0:</strong> The process starts at zero</li>
+                    <li><strong>Independent Increments:</strong> W(t) - W(s) is independent of the past for t > s</li>
+                    <li><strong>Gaussian Increments:</strong> W(t) - W(s) ~ N(0, t-s)</li>
+                    <li><strong>Continuous Paths:</strong> The trajectories are continuous but nowhere differentiable</li>
+                </ul>
+            </div>
+
+            <p>
+                Unlike the Poisson process which models discrete events arriving over time, the Wiener process models continuous random fluctuations. It's fundamental to physics (describing particle motion), finance (modeling stock prices), and many other fields.
+            </p>
+
+            <h3>The Euler-Maruyama Method</h3>
+            
+            <p><strong>Stochastic Differential Equations (SDEs)</strong></p>
+            <p>A general SDE has the form:</p>
+            <div class="formula">
+                dX(t) = a(X(t), t)dt + b(X(t), t)dW(t)
+            </div>
+            <p>where:</p>
+            <ul>
+                <li><strong>a(X, t)</strong> is the drift coefficient (deterministic trend)</li>
+                <li><strong>b(X, t)</strong> is the diffusion coefficient (volatility/noise intensity)</li>
+                <li><strong>dW(t)</strong> represents the Wiener process increment</li>
+            </ul>
+
+            <p><strong>Numerical Discretization</strong></p>
+            <p>The Euler-Maruyama method discretizes the SDE over time steps Δt = T/N:</p>
+            <div class="formula">
+                X(n+1) = X(n) + a(X(n), t(n))·Δt + b(X(n), t(n))·ΔW(n)<br>
+                where ΔW(n) ~ N(0, Δt)
+            </div>
+
+            <p><strong>For a Standard Wiener Process:</strong></p>
+            <p>Setting a(X, t) = 0 and b(X, t) = 1 gives us pure Brownian motion:</p>
+            <div class="formula">
+                W(n+1) = W(n) + ΔW(n),   ΔW(n) ~ N(0, Δt)
+            </div>
+
+            <h2>Interactive Simulation</h2>
+
+            <div class="demo-section">
+                <h3>Simulation Mode</h3>
+                
+                <div class="mode-selector">
+                    <button class="mode-button active" onclick="setMode('wiener')">
+                        Standard Wiener Process
+                    </button>
+                    <button class="mode-button" onclick="setMode('custom')">
+                        General SDE
+                    </button>
+                </div>
+
+                <div id="wienerInputs">
+                    <div class="form-group">
+                        <label for="wienerSigma">Volatility σ (diffusion coefficient):</label>
+                        <input type="number" id="wienerSigma" min="0.1" max="5" value="1" step="0.1">
+                    </div>
+                </div>
+
+                <div id="customInputs" class="sde-inputs">
+                    <div class="form-group">
+                        <label for="driftFunc">Drift Function a(x, t):</label>
+                        <textarea id="driftFunc" rows="2">0</textarea>
+                        <div class="preset-buttons">
+                            <button class="preset-button" onclick="setPreset('ou')">Ornstein-Uhlenbeck</button>
+                            <button class="preset-button" onclick="setPreset('gbm')">Geometric Brownian</button>
+                            <button class="preset-button" onclick="setPreset('linear')">Linear Drift</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diffusionFunc">Diffusion Function b(x, t):</label>
+                        <textarea id="diffusionFunc" rows="2">1</textarea>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Tip:</strong> Use JavaScript syntax. Variables: x (current state), t (time), dt (time step).<br>
+                        Examples: <code>-0.5 * x</code> (mean reversion), <code>0.2 * x</code> (GBM drift), <code>Math.sin(t)</code> (time-varying)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="T">Time Interval T:</label>
+                    <input type="number" id="T" min="0.1" max="10" value="1" step="0.1">
+                </div>
+
+                <div class="form-group">
+                    <label for="N">Number of Steps N:</label>
+                    <input type="number" id="N" min="100" max="10000" value="1000" step="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="paths">Number of Sample Paths:</label>
+                    <select id="paths">
+                        <option value="1">1 path</option>
+                        <option value="5" selected>5 paths</option>
+                        <option value="10">10 paths</option>
+                        <option value="20">20 paths</option>
+                        <option value="50">50 paths</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="x0">Initial Value X(0):</label>
+                    <input type="number" id="x0" min="-10" max="10" value="0" step="0.1">
+                </div>
+
+                <button onclick="runSimulation()">▶ Run Simulation</button>
+                <button onclick="resetSimulation()">🔄 Reset</button>
+
+                <div id="statsContainer" style="display:none;">
+                    <h3>Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="meanFinal">-</div>
+                            <div class="stat-label">Mean Final Value</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="varFinal">-</div>
+                            <div class="stat-label">Variance</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="minFinal">-</div>
+                            <div class="stat-label">Min Final Value</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="maxFinal">-</div>
+                            <div class="stat-label">Max Final Value</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="stdFinal">-</div>
+                            <div class="stat-label">Std Deviation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <canvas id="pathChart"></canvas>
+                <canvas id="distributionChart"></canvas>
+            </div>
+
+            <h3>Interpretation</h3>
+            <p>
+                <strong>What the graphs show:</strong>
+            </p>
+            <ul>
+                <li><strong>Sample Paths (Top Graph):</strong> Each line represents one realization of the stochastic process. For a Wiener process, paths exhibit continuous random fluctuations without any preferred direction.</li>
+                <li><strong>Distribution of Final Values (Bottom Graph):</strong> This histogram shows the distribution of X(T) across all simulated paths. For a standard Wiener process, this converges to N(0, σ²T).</li>
+            </ul>
+
+            <h2>Common SDE Examples</h2>
+
+            <div class="demo-section">
+                <h3>Pre-configured Examples</h3>
+                
+                <p><strong>1. Ornstein-Uhlenbeck Process (Mean Reversion)</strong></p>
+                <div class="formula">
+                    dX(t) = θ(μ - X(t))dt + σdW(t)
+                </div>
+                <p>Models processes that are pulled back toward a long-term mean μ. Used in interest rate modeling and velocity of particles in fluids.</p>
+                
+                <p><strong>2. Geometric Brownian Motion</strong></p>
+                <div class="formula">
+                    dS(t) = μS(t)dt + σS(t)dW(t)
+                </div>
+                <p>The famous Black-Scholes model for stock prices. The drift and diffusion are proportional to the current price.</p>
+                
+                <p><strong>3. Linear Drift</strong></p>
+                <div class="formula">
+                    dX(t) = μdt + σdW(t)
+                </div>
+                <p>Brownian motion with constant drift. The process has a deterministic upward (or downward) trend plus random noise.</p>
+
+                <button onclick="runExample('ou')">📊 Simulate Ornstein-Uhlenbeck</button>
+                <button onclick="runExample('gbm')">💰 Simulate Geometric Brownian</button>
+                <button onclick="runExample('drift')">📈 Simulate Linear Drift</button>
+            </div>
+
+            <h2>Box-Muller Transform</h2>
+            
+            <p>
+                To generate the Gaussian increments ΔW ~ N(0, Δt) needed for the Euler-Maruyama method, we use the Box-Muller transform. This classical algorithm converts two independent uniform random variables U₁, U₂ ~ Uniform(0,1) into standard normal variables:
+            </p>
+            
+            <div class="formula">
+                Z = √(-2 ln(U₁)) · cos(2πU₂)<br>
+                ΔW = √(Δt) · Z
+            </div>
+
+            <p>
+                This guarantees that our increments follow a true normal distribution, which is essential for the mathematical properties of Brownian motion and SDEs. The algorithm is efficient and produces high-quality random numbers.
+            </p>
+
+            <h2>Convergence and Accuracy</h2>
+
+            <div class="demo-section">
+                <h3>Effect of Step Size</h3>
+                <p>The Euler-Maruyama method is a first-order approximation. As N increases (smaller Δt), the numerical solution converges to the true solution of the SDE.</p>
+                
+                <div class="form-group">
+                    <label for="convT">Time Interval T:</label>
+                    <input type="number" id="convT" min="0.5" max="5" value="1" step="0.5">
+                </div>
+
+                <button onclick="analyzeConvergence()">🔬 Analyze Convergence</button>
+                
+                <div id="convergenceResults" style="display:none;">
+                    <canvas id="convergenceChart"></canvas>
+                    <div class="info-box" style="margin-top: 1rem;">
+                        <strong>Interpretation:</strong> The same random process simulated with different step sizes (N = 50, 200, 500, 2000). Larger N values produce smoother paths that better approximate the continuous-time process. All paths use the same underlying randomness for fair comparison.
+                    </div>
+                </div>
+            </div>
+
+            <h2>Theoretical Properties</h2>
+
+            <div class="info-box">
+                <strong>📐 Mathematical Properties of Wiener Process</strong><br>
+                <ul>
+                    <li><strong>Expected Value:</strong> E[W(t)] = 0 for all t</li>
+                    <li><strong>Variance:</strong> Var(W(t)) = t (variance grows linearly with time)</li>
+                    <li><strong>Quadratic Variation:</strong> [W, W](t) = t (a measure of the "roughness")</li>
+                    <li><strong>Non-differentiability:</strong> Almost surely nowhere differentiable despite being continuous</li>
+                    <li><strong>Markov Property:</strong> Future evolution depends only on current state, not history</li>
+                </ul>
+            </div>
+
+            <h2>Applications</h2>
+
+            <div class="info-box">
+                <strong>🌍 Real-World Applications of SDEs</strong><br>
+                <ul>
+                    <li><strong>Finance:</strong> Option pricing (Black-Scholes), interest rate models, portfolio optimization</li>
+                    <li><strong>Physics:</strong> Particle diffusion, thermal fluctuations, quantum mechanics</li>
+                    <li><strong>Biology:</strong> Population dynamics, neural activity, gene expression</li>
+                    <li><strong>Engineering:</strong> Signal processing, control systems, filtering</li>
+                    <li><strong>Climate Science:</strong> Temperature fluctuations, weather patterns</li>
+                    <li><strong>Chemistry:</strong> Reaction kinetics, molecular dynamics</li>
+                </ul>
+            </div>
+
+            <h2>Summary and Conclusions</h2>
+            
+            <p>
+                This simulation demonstrates the Euler-Maruyama method for numerically solving stochastic differential equations. We've seen how this simple discretization scheme can approximate continuous-time stochastic processes.
+            </p>
+
+            <p><strong>Key Takeaways:</strong></p>
+            <ul>
+                <li>The Wiener process is the continuous analogue of a random walk, with Gaussian increments and continuous paths</li>
+                <li>SDEs generalize ODEs by adding stochastic noise terms, capturing randomness in dynamic systems</li>
+                <li>The Euler-Maruyama method discretizes SDEs by updating state with drift and diffusion terms at each time step</li>
+                <li>Accuracy improves with smaller time steps, but at computational cost</li>
+                <li>Different choices of drift and diffusion functions produce vastly different process behaviors</li>
+                <li>SDEs are fundamental tools across science, engineering, and finance for modeling uncertainty</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>🎓 Connection to Previous Homework</strong><br>
+                In Homework 10, we simulated Poisson processes (counting processes) with discrete jumps. Here, we've moved to continuous-state processes. Both are fundamental stochastic processes, but serve different purposes:
+                <ul>
+                    <li><strong>Poisson Process:</strong> Models discrete events (arrivals, failures, clicks)</li>
+                    <li><strong>Wiener Process:</strong> Models continuous fluctuations (prices, temperatures, positions)</li>
+                </ul>
+                Together, they form the foundation for more complex stochastic models that combine jumps and diffusion.
+            </div>
+        </article>
+
+        <div class="back-home-box">
+            <a href="../index.html" class="back-home-link">← Back to Home</a>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <p><small>&copy; 2025 Francesco Pio Fata – Homework 11</small></p>
+    </footer>
+
+    <script>
+        let currentMode = 'wiener';
+        let simulations = [];
+
+        function setMode(mode) {
+            currentMode = mode;
+            const buttons = document.querySelectorAll('.mode-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('wienerInputs').style.display = mode === 'wiener' ? 'block' : 'none';
+            document.getElementById('customInputs').classList.toggle('active', mode === 'custom');
+        }
+
+        function setPreset(type) {
+            const drift = document.getElementById('driftFunc');
+            const diffusion = document.getElementById('diffusionFunc');
+
+            if (type === 'ou') {
+                drift.value = '0.5 * (0 - x)';  // θ(μ - x) with θ=0.5, μ=0
+                diffusion.value = '0.5';
+            } else if (type === 'gbm') {
+                drift.value = '0.1 * x';  // μx with μ=0.1
+                diffusion.value = '0.3 * x';  // σx with σ=0.3
+            } else if (type === 'linear') {
+                drift.value = '0.5';
+                diffusion.value = '1';
+            }
+        }
+
+        function boxMuller() {
+            const u1 = Math.random();
+            const u2 = Math.random();
+            return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        }
+
+        function runSimulation() {
+            const T = parseFloat(document.getElementById('T').value);
+            const N = parseInt(document.getElementById('N').value);
+            const numPaths = parseInt(document.getElementById('paths').value);
+            const x0 = parseFloat(document.getElementById('x0').value);
+            const dt = T / N;
+
+            let driftFunc, diffusionFunc;
+
+            if (currentMode === 'wiener') {
+                const sigma = parseFloat(document.getElementById('wienerSigma').value);
+                driftFunc = (x, t) => 0;
+                diffusionFunc = (x, t) => sigma;
+            } else {
+                const driftCode = document.getElementById('driftFunc').value;
+                const diffusionCode = document.getElementById('diffusionFunc').value;
+                
+                try {
+                    driftFunc = new Function('x', 't', 'dt', 'return ' + driftCode);
+                    diffusionFunc = new Function('x', 't', 'dt', 'return ' + diffusionCode);
+                } catch (e) {
+                    alert('Error in function syntax: ' + e.message);
+                    return;
+                }
+            }
+
+            simulations = [];
+
+            for (let path = 0; path < numPaths; path++) {
+                const times = [0];
+                const values = [x0];
+                let x = x0;
+
+                for (let i = 0; i < N; i++) {
+                    const t = i * dt;
+                    const dW = Math.sqrt(dt) * boxMuller();
+                    
+                    try {
+                        const drift = driftFunc(x, t, dt);
+                        const diffusion = diffusionFunc(x, t, dt);
+                        x = x + drift * dt + diffusion * dW;
+                    } catch (e) {
+                        alert('Error evaluating functions: ' + e.message);
+                        return;
+                    }
+
+                    times.push((i + 1) * dt);
+                    values.push(x);
+                }
+
+                simulations.push({ times, values, finalValue: x });
+            }
+
+            // Calculate statistics
+            const finalValues = simulations.map(s => s.finalValue);
+            const mean = finalValues.reduce((a, b) => a + b, 0) / finalValues.length;
+            const variance = finalValues.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / finalValues.length;
+            const std = Math.sqrt(variance);
+            const min = Math.min(...finalValues);
+            const max = Math.max(...finalValues);
+
+            document.getElementById('meanFinal').textContent = mean.toFixed(3);
+            document.getElementById('varFinal').textContent = variance.toFixed(3);
+            document.getElementById('stdFinal').textContent = std.toFixed(3);
+            document.getElementById('minFinal').textContent = min.toFixed(3);
+            document.getElementById('maxFinal').textContent = max.toFixed(3);
+            document.getElementById('statsContainer').style.display = 'block';
+
+            drawPathChart();
+            drawDistributionChart(finalValues);
+        }
+
+        function drawPathChart() {
+            const canvas = document.getElementById('pathChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Find range
+            let minVal = Infinity, maxVal = -Infinity;
+            simulations.forEach(sim => {
+                minVal = Math.min(minVal, ...sim.values);
+                maxVal = Math.max(maxVal, ...sim.values);
+            });
+            const range = maxVal - minVal || 1;
+            const T = simulations[0].times[simulations[0].times.length - 1];
+
+            // Draw grid
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (width - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+
+                const y = padding + (height - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Time', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('X(t)', 0, 0);
+            ctx.restore();
+
+            // Draw paths
+            const colors = ['#3b82f6', '#60a5fa', '#93c5fd', '#10b981', '#34d399', '#6ee7b7', '#f59e0b', '#fbbf24', '#fcd34d', '#ef4444'];
+            
+            simulations.forEach((sim, idx) => {
+                ctx.strokeStyle = colors[idx % colors.length];
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                for (let i = 0; i < sim.times.length; i++) {
+                    const x = padding + (width - 2 * padding) * sim.times[i] / T;
+                    const y = height - padding - (height - 2 * padding) * (sim.values[i] - minVal) / (range + 0.1);
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
+            // Axis labels
+            ctx.fillStyle = '#a5d6ff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            for (let i = 0; i <= 5; i++) {
+                const x = padding + (width - 2 * padding) * i / 5;
+                ctx.fillText((T * i / 5).toFixed(2), x, height - padding + 20);
+            }
+
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 5; i++) {
+                const y = height - padding - (height - 2 * padding) * i / 5;
+                const value = minVal + (range + 0.1) * i / 5;
+                ctx.fillText(value.toFixed(2), padding - 10, y + 5);
+            }
+        }
+
+        function drawDistributionChart(finalValues) {
+            const canvas = document.getElementById('distributionChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Create histogram
+            const numBins = Math.min(20, Math.ceil(finalValues.length / 5));
+            const minVal = Math.min(...finalValues);
+            const maxVal = Math.max(...finalValues);
+            const binWidth = (maxVal - minVal) / numBins || 1;
+            const bins = new Array(numBins).fill(0);
+
+            finalValues.forEach(val => {
+                const binIndex = Math.min(Math.floor((val - minVal) / binWidth), numBins - 1);
+                bins[binIndex]++;
+            });
+
+            const maxFreq = Math.max(...bins);
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Final Value X(T)', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Frequency', 0, 0);
+            ctx.restore();
+
+            // Draw bars
+            const availableWidth = width - 2 * padding;
+            const barWidthPixels = availableWidth / numBins;
+
+            bins.forEach((freq, i) => {
+                const x = padding + i * barWidthPixels;
+                const barHeight = (height - 2 * padding) * freq / (maxFreq || 1);
+                const y = height - padding - barHeight;
+
+                const gradient = ctx.createLinearGradient(x, y, x, height - padding);
+                gradient.addColorStop(0, '#3b82f6');
+                gradient.addColorStop(1, '#1e3a8a');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x, y, barWidthPixels * 0.9, barHeight);
+            });
+
+            // Draw mean line
+            const mean = finalValues.reduce((a, b) => a + b, 0) / finalValues.length;
+            const meanX = padding + (width - 2 * padding) * (mean - minVal) / (maxVal - minVal || 1);
+            
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(meanX, padding);
+            ctx.lineTo(meanX, height - padding);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#ef4444';
+            ctx.font = '12px Arial';
+            ctx.fillText('Mean = ' + mean.toFixed(3), meanX, padding - 10);
+        }
+
+        function resetSimulation() {
+            simulations = [];
+            const pathCanvas = document.getElementById('pathChart');
+            const distCanvas = document.getElementById('distributionChart');
+            
+            const pathCtx = pathCanvas.getContext('2d');
+            const distCtx = distCanvas.getContext('2d');
+            
+            pathCtx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            pathCtx.fillRect(0, 0, pathCanvas.width, pathCanvas.height);
+            
+            distCtx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            distCtx.fillRect(0, 0, distCanvas.width, distCanvas.height);
+            
+            document.getElementById('statsContainer').style.display = 'none';
+        }
+
+        function runExample(type) {
+            currentMode = 'custom';
+            document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.mode-button')[1].classList.add('active');
+            
+            document.getElementById('wienerInputs').style.display = 'none';
+            document.getElementById('customInputs').classList.add('active');
+
+            const drift = document.getElementById('driftFunc');
+            const diffusion = document.getElementById('diffusionFunc');
+
+            if (type === 'ou') {
+                drift.value = '0.5 * (0 - x)';
+                diffusion.value = '0.5';
+                document.getElementById('x0').value = '2';
+            } else if (type === 'gbm') {
+                drift.value = '0.1 * x';
+                diffusion.value = '0.3 * x';
+                document.getElementById('x0').value = '1';
+            } else if (type === 'drift') {
+                drift.value = '0.5';
+                diffusion.value = '1';
+                document.getElementById('x0').value = '0';
+            }
+
+            setTimeout(runSimulation, 100);
+        }
+
+        function analyzeConvergence() {
+            const T = parseFloat(document.getElementById('convT').value);
+            const nValues = [50, 200, 500, 2000];
+            const x0 = 0;
+            const sigma = 1;
+
+            // Generate base random sequence
+            const maxN = Math.max(...nValues);
+            const baseRandoms = [];
+            for (let i = 0; i < maxN; i++) {
+                baseRandoms.push(boxMuller());
+            }
+
+            const canvas = document.getElementById('convergenceChart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 500;
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 60;
+
+            ctx.fillStyle = 'rgba(15, 15, 25, 0.9)';
+            ctx.fillRect(0, 0, width, height);
+
+            const pathsData = [];
+            let minVal = Infinity, maxVal = -Infinity;
+
+            nValues.forEach(N => {
+                const dt = T / N;
+                const times = [0];
+                const values = [x0];
+                let x = x0;
+
+                for (let i = 0; i < N; i++) {
+                    // Aggregate base randoms
+                    const startIdx = Math.floor(i * maxN / N);
+                    const endIdx = Math.floor((i + 1) * maxN / N);
+                    let dW = 0;
+                    for (let j = startIdx; j < endIdx; j++) {
+                        dW += baseRandoms[j] * Math.sqrt(T / maxN);
+                    }
+
+                    x = x + sigma * dW;
+                    times.push((i + 1) * dt);
+                    values.push(x);
+
+                    minVal = Math.min(minVal, x);
+                    maxVal = Math.max(maxVal, x);
+                }
+
+                pathsData.push({ N, times, values });
+            });
+
+            const range = maxVal - minVal || 1;
+
+            // Draw grid
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (width - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+
+                const y = padding + (height - 2 * padding) * i / 10;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#3b82f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.lineTo(width - padding, padding);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#f1f1f1';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Time', width / 2, height - 20);
+            
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('W(t)', 0, 0);
+            ctx.restore();
+
+            // Draw paths
+            const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6'];
+            
+            pathsData.forEach((path, idx) => {
+                ctx.strokeStyle = colors[idx];
+                ctx.lineWidth = 2 + idx * 0.5;
+                ctx.beginPath();
+
+                for (let i = 0; i < path.times.length; i++) {
+                    const x = padding + (width - 2 * padding) * path.times[i] / T;
+                    const y = height - padding - (height - 2 * padding) * (path.values[i] - minVal) / (range + 0.1);
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
+            // Legend
+            const legendX = width - 180;
+            const legendY = padding + 20;
+            pathsData.forEach((path, idx) => {
+                ctx.strokeStyle = colors[idx];
+                ctx.lineWidth = 2 + idx * 0.5;
+                ctx.beginPath();
+                ctx.moveTo(legendX, legendY + idx * 25);
+                ctx.lineTo(legendX + 30, legendY + idx * 25);
+                ctx.stroke();
+
+                ctx.fillStyle = '#f1f1f1';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(`N = ${path.N}`, legendX + 35, legendY + idx * 25 + 4);
+            });
+
+            document.getElementById('convergenceResults').style.display = 'block';
+        }
+
+        // Run initial simulation
+        window.addEventListener('load', () => {
+            runSimulation();
+        });
+    </script>
+</body>
+</html>
